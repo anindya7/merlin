@@ -6,4 +6,8 @@ class View < ApplicationRecord
   def self.user_views(user)
     where(user_id: user, played: true)
   end
+
+  def completed
+    where(played: true)
+  end
 end

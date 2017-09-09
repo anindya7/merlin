@@ -7,12 +7,27 @@
     <h3>Week <%= @video.week %> - <%= @video.name %></h3><br>
     <script src="<%= @video.url %>"></script>
     <br>
-    <% unless @next_video.nil? %>
-      <%= link_to course_video_path(@course, @next_video), class: 'btn btn-primary' do %>
-        Next Video&nbsp;<span class="pull-right"><span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span></span>
+    <div class="row">
+      <% unless @next_video.nil? %>
+        <div class="col-sm-3">
+          <%= link_to course_video_path(@course, @next_video), class: 'btn btn-primary' do %>
+            Next Video&nbsp;<span class="pull-right"><span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span></span>
+          <% end %>
+        </div>
       <% end %>
-    <% end %>
-
+      <% unless has_viewed(current_user.id, @video.id) %>
+        <div class="col-sm-2">
+          <%= form_tag("/video/complete", method: "post") do %>
+            <%= hidden_field_tag(:user_id, current_user.id) %>
+            <%= hidden_field_tag(:video_id, @video.id) %>
+            <%= hidden_field_tag(:course_id, @course.id) %>
+            <%= hidden_field_tag(:played, true) %>
+            <%= submit_tag("Complete Lesson", class: "btn btn-success") %>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+    
     <script>
       <% unless has_incomplete_view(current_user.id, @video.id) || has_viewed(current_user.id, @video.id) %>
         jwplayer().on('play', function(e) {
