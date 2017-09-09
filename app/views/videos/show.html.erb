@@ -20,7 +20,7 @@
            $.ajax({
             type: 'POST',
             contentType: "application/json; charset=utf-8",
-            url: 'http://localhost:3000/views',
+            url: "<% ENV['DEFAULT_HOST'] %>/views",
             headers: { },
             data : JSON.stringify({
               user_id: <%= current_user.id %>,
@@ -45,7 +45,7 @@
            $.ajax({
             type: 'POST',
             contentType: "application/json; charset=utf-8",
-            url: 'http://localhost:3000/views',
+            url: "<% ENV['DEFAULT_HOST'] %>/views",
             headers: { },
             data : JSON.stringify({
               user_id: <%= current_user.id %>,
