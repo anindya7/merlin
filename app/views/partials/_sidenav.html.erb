@@ -1,0 +1,27 @@
+<div id="accordion" class="panel-group">
+    <% (1..@course.total_weeks).each do |week| %>
+        <div class="panel panel-default">
+            <div class="panel-heading" data-toggle="collapse" data-parent="#accordion" href="#collapse<%= week %>">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse<%= week %>">Week <%= week %></a>
+                </h4>
+            </div>
+            <div id="collapse<%= week %>" class="panel-collapse collapse <%= 'in' if @video.week == week %>">
+                <div class="panel-body">
+                    <ul class="nav nav-pills nav-stacked">
+                        <% @videos.ordered_in_week(week).each do |video| %>
+                            <li class="presentation <%= active_class(video.id, @video.id) %>">
+                                <%= link_to course_video_path(@course, video) do %>
+                                    <%= video.name %>
+                                    <% if has_viewed(current_user.id, video.id) %>
+                                        <span class="pull-right"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></span>
+                                    <% end %>
+                                <% end %>
+                            </li>
+                        <% end %>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    <% end %>
+</div>

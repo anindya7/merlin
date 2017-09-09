@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Calm India</title>
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <% if notice %>
+    <div class="alert alert-info" role="alert" style="margin: 0px">
+      <%= notice %>
+    </div>
+    <% elsif alert %>
+      <div class="alert alert-danger" role="alert" style="margin: 0px">
+      <%= alert %>
+    </div>
+    <% end %>
+
+    <%= render 'partials/nav' %>
+
+    <div class="container well">
+      
+        <%= yield %>
+      
+    </div>
+  </body>
+</html>

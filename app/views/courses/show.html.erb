@@ -1,0 +1,50 @@
+
+<% if @views.count == 0 %>
+    <%= link_to "Start Course", course_video_path(@course, @videos.ordered_in_week(1).first), class: 'btn btn-success btn-lg' %>
+<% elsif @views.count == @course.videos.count %>
+    <%= link_to course_video_path(@course, @videos.ordered_in_week(1).first), class: 'btn btn-success btn-lg' do %>
+        Course Completed&nbsp;<span class="pull-right"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></span>
+    <% end %>
+<% else %>
+    <%= link_to "Resume Course", course_video_path(@course, @next_video), class: 'btn btn-success btn-lg' %>
+    <h4 class="text-primary">Next Video: Week <%= @next_video.week %> - <%= @next_video.name %></h4>
+<% end %>
+<br>
+<div class="well">
+    <h5>Course completion:</h5>
+    <% completed = ((@views.count.to_f/@course.videos.count.to_f)*100).to_i %>
+    <div class="progress">
+      <div class="progress-bar" role="progressbar" aria-valuenow="<%= completed %>" aria-valuemin="0" aria-valuemax="100" style="min-width: 2em; width: <%= completed %>%">
+        <%= completed %>%
+      </div>
+    </div>
+</div>
+<h3>Course Syllabus</h3>
+<br>
+<div id="accordion" class="panel-group">
+    <% (1..@course.total_weeks).each do |week| %>
+        <div class="panel panel-default">
+            <div class="panel-heading" data-toggle="collapse" data-parent="#accordion" href="#collapse<%= week %>">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse<%= week %>">Week <%= week %></a>
+                </h4>
+            </div>
+            <div id="collapse<%= week %>" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <ul class="nav nav-pills nav-stacked">
+                        <% @videos.ordered_in_week(week).each do |video| %>
+                            <li class="presentation">
+                                <%= link_to course_video_path(@course, video) do %>
+                                    <%= video.name %>
+                                    <% if has_viewed(current_user.id, video.id) %>
+                                        <span class="pull-right"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></span>
+                                    <% end %>
+                                <% end %>
+                            </li>
+                        <% end %>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    <% end %>
+</div>

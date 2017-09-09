@@ -1,0 +1,68 @@
+<div class="row">
+  <div class="col-md-4">
+    <%= render 'partials/sidenav' %>
+  </div>
+  <div class="col-md-8">
+    <h3><%= @course.name %></h3>
+    <h3>Week <%= @video.week %> - <%= @video.name %></h3><br>
+    <script src="<%= @video.url %>"></script>
+    <br>
+    <% unless @next_video.nil? %>
+      <%= link_to course_video_path(@course, @next_video), class: 'btn btn-primary' do %>
+        Next Video&nbsp;<span class="pull-right"><span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span></span>
+      <% end %>
+    <% end %>
+
+    <script>
+      <% unless has_incomplete_view(current_user.id, @video.id) || has_viewed(current_user.id, @video.id) %>
+        jwplayer().on('play', function(e) {
+          console.log("started");
+           $.ajax({
+            type: 'POST',
+            contentType: "application/json; charset=utf-8",
+            url: 'http://localhost:3000/views',
+            headers: { },
+            data : JSON.stringify({
+              user_id: <%= current_user.id %>,
+              video_id: <%= @video.id %>,
+              course_id: <%= @course.id %>,
+              played: false
+            }),
+            dataType: "json",
+            success: function (result) {
+              console.log("success");
+            },
+            error: function (){
+              console.log("something wrong!");
+            }
+           });
+        });
+      <% end %>
+
+      <% unless has_viewed(current_user.id, @video.id) %>
+        jwplayer().on('complete', function(e) {
+          console.log("complete");
+           $.ajax({
+            type: 'POST',
+            contentType: "application/json; charset=utf-8",
+            url: 'http://localhost:3000/views',
+            headers: { },
+            data : JSON.stringify({
+              user_id: <%= current_user.id %>,
+              video_id: <%= @video.id %>,
+              course_id: <%= @course.id %>,
+              played: true
+            }),
+            dataType: "json",
+            success: function (result) {
+              console.log("success");
+            },
+            error: function (){
+              console.log("something wrong!");
+            }
+           });
+        });
+      <% end %>
+    </script>
+  </div>
+</div>
