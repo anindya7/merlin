@@ -10,6 +10,7 @@
     <h4 class="text-primary">Next Video: Week <%= @next_video.week %> - <%= @next_video.name %></h4>
 <% end %>
 <br>
+<br>
 <div class="well">
     <h5>Course completion:</h5>
     <% completed = ((@views.count.to_f/@course.videos.count.to_f)*100).to_i %>
