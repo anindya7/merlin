@@ -8,7 +8,7 @@ class CoursesController < ApplicationController
     @course = Course.find(params[:id])
     @views = @course.views.user_views(current_user.id)
     @videos = @course.videos
-    unless @videos.count == @views.count && @views.count == 0  
+    if  !(@videos.count == @views.count) && !(@views.count == 0)  
       unless @course.views.where(played: false).last.nil?
         @next_video = Video.find(@course.views.where(played: false).last.video_id)
       else
