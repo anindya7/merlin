@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   post '/video/complete' => 'views#complete'
-  devise_for :users
+  devise_for :users, controllers: { :registrations => "users/registrations" }
+
   resources :courses, only: [:index, :show] do
     resources :videos, only: [:show]
   end
