@@ -1,19 +1,24 @@
 
-<% if @views.count == 0 %>
+<% if @views.count + @quizzes_taken.count == 0 %>
     <%= link_to "Start Course", course_video_path(@course, @videos.ordered_in_week(1).first), class: 'btn btn-success btn-lg' %>
-<% elsif @views.count == @course.videos.count %>
+<% elsif @views.count + @quizzes_taken.count == @videos.count + @quizzes.count %>
     <%= link_to course_video_path(@course, @videos.ordered_in_week(1).first), class: 'btn btn-success btn-lg' do %>
         Course Completed&nbsp;<span class="pull-right"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></span>
     <% end %>
 <% else %>
-    <%= link_to "Resume Course", course_video_path(@course, @next_video), class: 'btn btn-success btn-lg' %>
-    <h4 class="text-primary">Next Video: Week <%= @next_video.week %> - <%= @next_video.name %></h4>
+    <% if @next_page.is_a?(Video) %>
+        <%= link_to "Resume Course", course_video_path(@course, @next_page), class: 'btn btn-success btn-lg' %>
+        <h4 class="text-primary">Next Video: Week <%= @next_page.week %> - <%= @next_page.name %></h4>
+    <% elsif @next_page.is_a?(Quiz) %>
+        <%= link_to "Resume Course", course_quiz_path(@course, @next_page), class: 'btn btn-success btn-lg' %>
+        <h4 class="text-primary">Next Quiz: Week <%= @next_page.week %> - <%= @next_page.name %></h4>
+    <% end %>
 <% end %>
 <br>
 <br>
 <div class="well">
     <h5>Course completion:</h5>
-    <% completed = ((@views.count.to_f/@course.videos.count.to_f)*100).to_i %>
+    <% completed = (((@views.count.to_f + @quizzes_taken.count.to_f)/(@course.videos.count.to_f + @course.quizzes.count.to_f))*100).to_i %>
     <div class="progress">
       <div class="progress-bar" role="progressbar" aria-valuenow="<%= completed %>" aria-valuemin="0" aria-valuemax="100" style="min-width: 2em; width: <%= completed %>%">
         <%= completed %>%
@@ -38,6 +43,16 @@
                                 <%= link_to course_video_path(@course, video) do %>
                                     <%= video.name %>
                                     <% if has_viewed(current_user.id, video.id) %>
+                                        <span class="pull-right"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></span>
+                                    <% end %>
+                                <% end %>
+                            </li>
+                        <% end %>
+                        <% @quizzes.ordered_in_week(week).each do |quiz| %>
+                            <li class="presentation">
+                                <%= link_to course_quiz_path(@course, quiz) do %>
+                                    <%= quiz.name %>
+                                    <% if has_taken_quiz(current_user.id, quiz.id) %>
                                         <span class="pull-right"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></span>
                                     <% end %>
                                 <% end %>

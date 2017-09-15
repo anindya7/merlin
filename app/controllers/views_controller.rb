@@ -24,26 +24,24 @@ class ViewsController < ApplicationController
 
     @course = Course.find(params[:course_id])
     @views = @course.views.user_views(current_user.id)
+    @quizzes_taken = @course.quiz_scores.user_taken(current_user.id)
     @videos = @course.videos
-    if  !(@videos.count == @views.count) && !(@views.count == 0)  
-      unless @course.views.where(played: false).last.nil?
-        @next_video = Video.find(@course.views.where(played: false).last.video_id)
+    @quizzes = @course.quizzes
+    @video = Video.find(params[:video_id])
+    @next_page = @video.next_page
+
+    if @next_page.nil?
+      if @views.count + @quizzes_taken.count == @videos.count + @quizzes.count
+        flash[:notice] = "#{@course.name} Course Completed"
+        redirect_to course_path(@course)
       else
-        last_video = Video.find(@views.last.video_id)
-        @next_video = Video.where(course_id: @course.id, week: last_video.week, order_in_week: last_video.order_in_week+1).first
-        if @next_video.nil?
-          @next_video = Video.where(course_id: @course.id, week: last_video.week+1, order_in_week: 1).first
-          if @next_video.nil?
-            @next_video = @videos.ordered_in_week(1).first
-          end
-        end
+        @next_page = @videos.ordered_in_week(1).first
+        redirect_to course_video_path(@course, @next_page)
       end
-    end 
-    if @next_video.nil?
-      flash[:notice] = "#{@course.name} Course Completed"
-      redirect_to courses_path
-    else
-      redirect_to course_video_path(@course, @next_video)
+    elsif @next_page.is_a?(Video)
+      redirect_to course_video_path(@course, @next_page)
+    elsif @next_page.is_a?(Quiz)
+      redirect_to course_quiz_path(@course, @next_page)
     end
   end
 

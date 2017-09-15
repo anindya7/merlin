@@ -16,7 +16,11 @@ gem 'bootstrap-sass'
 gem 'rails_admin', '~> 1.2'
 gem 'tether-rails'
 gem 'figaro'
+
+# Payment gateways
 gem 'razorpay'
+gem 'ccavenue'
+
 # Use Puma as the app server
 gem 'puma', '~> 3.7'
 # Use SCSS for stylesheets

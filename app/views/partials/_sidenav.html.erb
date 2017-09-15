@@ -6,14 +6,32 @@
                     <a data-toggle="collapse" data-parent="#accordion" href="#collapse<%= week %>">Week <%= week %></a>
                 </h4>
             </div>
-            <div id="collapse<%= week %>" class="panel-collapse collapse <%= 'in' if @video.week == week %>">
+            <div id="collapse<%= week %>" class="panel-collapse collapse <%= 'in' if (@video && @video.week == week)||(@quiz && @quiz.week == week) %>">
                 <div class="panel-body">
                     <ul class="nav nav-pills nav-stacked">
                         <% @videos.ordered_in_week(week).each do |video| %>
-                            <li class="presentation <%= active_class(video.id, @video.id) %>">
+                            <% if @video %>
+                                <li class="presentation <%= active_class(video.id, @video.id) %>">
+                            <% else%>
+                                <li class="presentation">
+                            <% end %>
                                 <%= link_to course_video_path(@course, video) do %>
                                     <%= video.name %>
                                     <% if has_viewed(current_user.id, video.id) %>
+                                        <span class="pull-right"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></span>
+                                    <% end %>
+                                <% end %>
+                            </li>
+                        <% end %>
+                        <% @quizzes.ordered_in_week(week).each do |quiz| %>
+                            <% if @quiz %>
+                                <li class="presentation <%= active_class(quiz.id, @quiz.id) %>">
+                            <% else%>
+                                <li class="presentation">
+                            <% end %>
+                                <%= link_to course_quiz_path(@course, quiz) do %>
+                                    <%= quiz.name %>
+                                    <% if has_taken_quiz(current_user.id, quiz.id) %>
                                         <span class="pull-right"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></span>
                                     <% end %>
                                 <% end %>

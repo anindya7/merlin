@@ -9,6 +9,6 @@ class CreateVideos < ActiveRecord::Migration[5.1]
       t.belongs_to :course, foreign_key: true
       t.timestamps
     end
-    # add_index :videos, :course_id
+    add_index :videos, :course_id
   end
 end

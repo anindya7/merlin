@@ -1,0 +1,25 @@
+<%
+  # merchantData="ENV['CC_MERCHANT_ID']"
+  # working_key="ENV['CC_WORKING_KEY']"   #Put in the 32 Bit Working Key provided by CCAVENUES.  
+  # access_code="ENV['CC_ACCESS_CODE']"   #Put in the Access Code in quotes provided by CCAVENUES.
+  
+  # params.each do |key,value|
+  #     merchantData += key+"="+value+"&" 
+  # end
+  
+  # crypto = Crypto.new
+  # encrypted_data = crypto.encrypt(merchantData,working_key)
+  
+%>
+<!-- <iframe  width="482" height="500" scrolling="No" frameborder="0"  id="paymentFrame" src="https://test.ccavenue.com/transaction/transaction.do?command=initiateTransaction&encRequest=<%=encrypted_data %>&access_code=<%=access_code %>">
+</iframe>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+      $('iframe#paymentFrame').load(function() {
+       window.addEventListener('message', function(e) {
+           $("#paymentFrame").css("height",e.data['newHeight']+'px');    
+       }, false);
+     }); 
+    });
+</script> -->

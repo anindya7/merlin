@@ -1,0 +1,80 @@
+<div class="row">
+  <div class="col-md-4">
+    <%= render 'partials/sidenav' %>
+  </div>
+  <div class="col-md-8">
+    <h3><%= @course.name %></h3>
+    <h3 style="display:inline">Week <%= @quiz.week %> - <%= @quiz.name %></h3>&nbsp;&nbsp;&nbsp;
+    <%= link_to "Download PDF", video_pdf_path, class: 'btn btn-sm btn-primary' %><br><br>
+    <% unless @total.present? %>    
+      <%= simple_form_for :quiz_score, :url => '/quiz/submit', html: {class: 'form_horizontal'} do |f| %>
+        <div class="form-inputs">
+          <% @quiz.questions.each_with_index do |question,index| %>
+            <p><%= "#{index+1}. #{question.question}" %></p>
+            <%#= f.collection_radio_buttons "questions[#{index}]", question.option_set.options.all.map { |o| [o.value, o.text] }, :first, :last, input_html: { class: 'required' } %>
+            <% question.option_set.options.all.each do |option| %>
+              <%= f.radio_button "questions[#{index}]", option.value, required: 'required' %>
+              <%= f.label "questions[#{index}]", option.text %>
+            <% end %>
+          <% end %>
+        </div>
+        <%= f.hidden_field :quiz_id, value: @quiz.id %>
+        <%= f.hidden_field :course_id, value: @course.id %>
+        <%= f.button :submit, "Submit Quiz", class: 'btn btn-success' %>
+      <% end %>
+    <% else %>
+      <h3 class="text-primary">Your Quiz Score: <%= @total %></h3>
+    <% end %>
+
+    <br>
+    <div class="row">
+      <% unless @next_page.nil? %>
+        <div class="col-sm-3">
+          <% if @next_page.is_a?(Video) %>
+            <%= link_to course_video_path(@course, @next_page), class: 'btn btn-primary' do %>
+              Next Video&nbsp;<span class="pull-right"><span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span></span>
+            <% end %>
+          <% elsif @next_page.is_a?(Quiz)  %>
+            <%= link_to course_quiz_path(@course, @next_page), class: 'btn btn-primary' do %>
+              Next Quiz&nbsp;<span class="pull-right"><span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span></span>
+            <% end %>
+          <% end %>
+        </div>
+        <% unless has_taken_quiz(current_user.id, @quiz.id) %>
+          <div class="col-sm-2">
+            <%= form_tag("/quiz/skip", method: "post") do %>
+              <%= hidden_field_tag(:user_id, current_user.id) %>
+              <%= hidden_field_tag(:quiz_id, @quiz.id) %>
+              <%= hidden_field_tag(:course_id, @course.id) %>
+              <%= submit_tag("Skip Quiz", class: "btn btn-success") %>
+            <% end %>
+          </div>
+        <% end %>
+      <% else %>
+        <% unless has_taken_quiz(current_user.id, @quiz.id) %>
+          <div class="col-sm-2">
+            <%= form_tag("/quiz/skip", method: "post") do %>
+              <%= hidden_field_tag(:user_id, current_user.id) %>
+              <%= hidden_field_tag(:quiz_id, @quiz.id) %>
+              <%= hidden_field_tag(:course_id, @course.id) %>
+              <% if @views.count + @quizzes_taken.count + 1 == @videos.count + @quizzes.count %>
+                <%= submit_tag("Complete Course", class: "btn btn-success") %>
+              <% else %>
+                <%= submit_tag("Skip Quiz", class: "btn btn-success") %>
+              <% end %>
+            <% end %>
+          </div>
+        <% else %>
+          <div class="col-sm-2">
+            <%= form_tag("/quiz/skip", method: "post") do %>
+              <%= hidden_field_tag(:user_id, current_user.id) %>
+              <%= hidden_field_tag(:quiz_id, @quiz.id) %>
+              <%= hidden_field_tag(:course_id, @course.id) %>
+              <%= submit_tag("Complete Course", class: "btn btn-success") %>
+            <% end %>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>

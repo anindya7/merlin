@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170911103709) do
+ActiveRecord::Schema.define(version: 20170913160538) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,6 +21,62 @@ ActiveRecord::Schema.define(version: 20170911103709) do
     t.integer "total_weeks"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "option_sets", force: :cascade do |t|
+    t.string "name"
+    t.integer "noop"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "option_sets_options", id: false, force: :cascade do |t|
+    t.bigint "option_id", null: false
+    t.bigint "option_set_id", null: false
+    t.index ["option_id"], name: "index_option_sets_options_on_option_id"
+    t.index ["option_set_id"], name: "index_option_sets_options_on_option_set_id"
+  end
+
+  create_table "options", force: :cascade do |t|
+    t.string "text"
+    t.integer "value"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "questions", force: :cascade do |t|
+    t.string "question"
+    t.bigint "quiz_id"
+    t.bigint "option_set_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.boolean "mandatory"
+    t.index ["option_set_id"], name: "index_questions_on_option_set_id"
+    t.index ["quiz_id"], name: "index_questions_on_quiz_id"
+  end
+
+  create_table "quiz_scores", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "quiz_id"
+    t.bigint "course_id"
+    t.boolean "taken", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["course_id"], name: "index_quiz_scores_on_course_id"
+    t.index ["quiz_id"], name: "index_quiz_scores_on_quiz_id"
+    t.index ["user_id", "course_id", "quiz_id"], name: "index_quiz_scores_on_user_id_and_course_id_and_quiz_id"
+    t.index ["user_id", "course_id"], name: "index_quiz_scores_on_user_id_and_course_id"
+    t.index ["user_id"], name: "index_quiz_scores_on_user_id"
+  end
+
+  create_table "quizzes", force: :cascade do |t|
+    t.string "name"
+    t.bigint "course_id"
+    t.integer "week"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "order_in_week"
+    t.index ["course_id"], name: "index_quizzes_on_course_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -67,6 +123,12 @@ ActiveRecord::Schema.define(version: 20170911103709) do
     t.index ["video_id"], name: "index_views_on_video_id"
   end
 
+  add_foreign_key "questions", "option_sets"
+  add_foreign_key "questions", "quizzes"
+  add_foreign_key "quiz_scores", "courses"
+  add_foreign_key "quiz_scores", "quizzes"
+  add_foreign_key "quiz_scores", "users"
+  add_foreign_key "quizzes", "courses"
   add_foreign_key "videos", "courses"
   add_foreign_key "views", "courses"
   add_foreign_key "views", "users"

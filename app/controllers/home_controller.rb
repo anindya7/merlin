@@ -1,5 +1,9 @@
 class HomeController < ApplicationController
-  def index 
+  before_action :check_guest, only: [:index]
 
+  def index 
+  end
+
+  def cc
   end
 end
