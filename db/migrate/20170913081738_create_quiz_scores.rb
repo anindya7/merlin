@@ -7,7 +7,5 @@ class CreateQuizScores < ActiveRecord::Migration[5.1]
       t.boolean :taken, :default => false
       t.timestamps
     end
-    add_index :quiz_scores, [:user_id, :course_id]
-    add_index :quiz_scores, [:user_id, :course_id, :quiz_id]
   end
 end

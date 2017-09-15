@@ -6,6 +6,5 @@ class CreateQuizzes < ActiveRecord::Migration[5.1]
       t.integer :week
       t.timestamps
     end
-    add_index :quizzes, :course_id
   end
 end

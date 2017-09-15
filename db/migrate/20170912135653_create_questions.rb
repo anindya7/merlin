@@ -6,7 +6,5 @@ class CreateQuestions < ActiveRecord::Migration[5.1]
       t.belongs_to :option_set, foreign_key: true  #, class_name: 'OptionSet'
       t.timestamps
     end
-    add_index :questions, :quiz_id
-    add_index :questions, :option_set_id
   end
 end
