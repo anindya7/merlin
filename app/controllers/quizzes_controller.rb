@@ -55,9 +55,11 @@ class QuizzesController < ApplicationController
     @views = @course.views.user_views(current_user.id)
     @next_page = @quiz.next_page
     @total = 0
-    scores.each do |key, value|
-      if value.present?
-        @total += value.to_i
+    unless scores.nil?
+      scores.each do |key, value|
+        if value.present?
+          @total += value.to_i
+        end
       end
     end
     unless QuizScore.where(user_id: current_user.id, quiz_id: @quiz.id).any?
