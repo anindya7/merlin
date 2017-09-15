@@ -1,13 +1,52 @@
-<h4>Courses</h4>
-<% @courses.each do |course| %>
-  <ul class="list-group">
-    <li class="list-group-item"><h4>
-      <%= link_to course_path(course) do %>
-        <%= course.name %>
-        <% if course.videos.count + course.quizzes.count == course.views.user_views(current_user).count + course.quiz_scores.user_taken(current_user.id).count %>
-          <span class="pull-right text-success"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></span>
-        <% end %>
+<div class="card social-card share  full-width m-b-10 no-border" data-social="item">
+      <div class="card-header ">
+        <h5 class="text-complete pull-left fs-12">Courses&nbsp;<i class="fa fa-circle text-complete fs-11"></i></h5>
+        <div class="clearfix"></div>
+      </div>
+      <div class="card-block">
+        <br>
+        <% @courses.each do |course| %>
+          <div class="card social-card share  full-width m-b-10" data-social="item">
+            <div class="card-description" style="padding-bottom:0px;">
+              <h4 style="width:100%;padding-left:10px; padding-right:10px;padding-bottom:0px;margin-bottom:0px;">
+                <%= link_to course_path(course) do %>
+                  <strong><%= course.name %></strong>
+                  <% if course.videos.count + course.quizzes.count == course.views.user_views(current_user).count + course.quiz_scores.user_taken(current_user.id).count %>
+                    <span class="pull-right text-success"><span class="fs-14 fa fa-check" aria-hidden="true"></span></span>
+                  <% end %>
+                <% end %>
+              </h4>
+            </div>
+            <div class="card-footer clearfix" style="padding-left:25px;">
+              <div class="pull-left">
+                
+                <% if course.views.user_views(current_user.id).count + course.quiz_scores.user_taken(current_user.id).count == 0  %>
+                  <%= link_to course_path(course), class: 'btn btn-success btn-xs' do %>
+                    Start Course&nbsp;&nbsp;<span class="pull-right"><span class="fs-14 pg-plus" aria-hidden="true"></span></span>
+                  <% end %>
+                
+                <% elsif course.views.user_views(current_user.id).count + course.quiz_scores.user_taken(current_user.id).count < course.videos.count + course.quizzes.count %>
+                  <% if course.next_page(current_user).is_a?(Video) %>
+                    <%= link_to course_video_path(course, course.next_page(current_user)), class: 'btn btn-success btn-xs' do %>
+                      Resume Course&nbsp;&nbsp;<span class="pull-right"><span class="fs-14 sl-screen-desktop" aria-hidden="true"></span></span>
+                    <% end %>
+                  <% else %>
+                    <%= link_to course_quiz_path(course, course.next_page(current_user)), class: 'btn btn-success btn-xs' do %>
+                      Resume Course&nbsp;&nbsp;<span class="pull-right"><span class="fs-14 sl-screen-desktop" aria-hidden="true"></span></span>
+                    <% end %>
+                  <% end %>
+                <% end %>
+
+                <%= link_to course_path(course), class: 'btn btn-complete btn-xs' do %>
+                  View Course&nbsp;&nbsp;<span class="pull-right"><span class="fs-14 fa fa-th" aria-hidden="true"></span></span>
+                <% end %>
+              
+              </div>
+              <div class="pull-right hint-text">
+              </div>
+              <div class="clearfix"></div>
+            </div>
+          </div>
       <% end %>
-    </h4></li>
-  </ul>
-<% end %>
+      </div>
+</div>

@@ -1,74 +1,100 @@
+<% content_for :heading do %>
+  <%= @course.name %>
+<% end %>
 <div class="row">
   <div class="col-md-4">
-    <%= render 'partials/sidenav' %>
+    <div class="card social-card share  full-width m-b-10 no-border">
+      <div class="card-header ">
+        <div class="card-title">
+          <span class="font-montserrat fs-11 all-caps">
+            Syllabus <i class="fa fa-chevron-right"></i>
+          </span>
+        </div>
+        <div class="card-controls">
+        </div>
+      </div>
+      <div class="card-block">
+        <%= render 'partials/sidenav' %>
+      </div>
+    </div>
   </div>
   <div class="col-md-8">
-    <h3><%= @course.name %></h3>
-    <h3 style="display:inline">Week <%= @video.week %> - <%= @video.name %></h3>&nbsp;&nbsp;&nbsp;
-    <%= link_to "Download PDF", video_pdf_path, class: 'btn btn-sm btn-primary' %><br><br>
-    <script src="<%= @video.url %>"></script>
-    <br>
-    <div class="row">
-      <% unless @next_page.nil? %>
-        <div class="col-sm-6">
-          <p class="text-primary"><strong>Audio File</strong></p>
-          <audio controls>
-            <source src="/assets/audio/shot.mp3" type="audio/mpeg">
-          Your browser does not support the audio element.
-          </audio>
+    <div class="card social-card share  full-width m-b-10 no-border" data-social="item">
+      <div class="card-header ">
+        <ol class="breadcrumb" style="padding:0px;margin:0px;">        
+          <li class="breadcrumb-item active">Week <%= @video.week %> - <%= @video.name %></li>
+        </ol>
+        <div class="clearfix"></div>
+      </div>
+      <div class="card-block" style="padding:10px;">
+        <script src="<%= @video.url %>"></script>
+      </div>
+      <div class="card-footer clearfix">
+        <div class="pull-left">
+          <%= link_to video_pdf_path, class: 'btn btn-complete', title: 'Download PDF' do %>
+            <i class="fa fa-file-pdf-o"></i>
+          <% end %>
+          <%= link_to video_audio_path, class: 'btn btn-complete', title: 'Download Audio' do %>
+            <i class="fs-14 sl-playlist"></i>
+          <% end %>
         </div>
-        <div class="col-sm-2">
-          <% unless has_viewed(current_user.id, @video.id) %>
-              <%= form_tag("/video/complete", method: "post") do %>
-                <%= hidden_field_tag(:user_id, current_user.id) %>
-                <%= hidden_field_tag(:video_id, @video.id) %>
-                <%= hidden_field_tag(:course_id, @course.id) %>
-                <%= hidden_field_tag(:played, true) %>
-                <%= submit_tag("Complete Lesson", class: "btn btn-success") %>
+        <div class="pull-right hint-text">
+          <div class="btn-group">
+            <% unless @next_page.nil? %>
+              <% if @next_page.is_a?(Video) %>
+                  <%= link_to course_video_path(@course, @next_page), class: 'btn btn-primary btn-sm w-100' do %>
+                    Next Video&nbsp;<span class="pull-right"><span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span></span>
+                  <% end %>
+              <% elsif @next_page.is_a?(Quiz)  %>
+                  <%= link_to course_quiz_path(@course, @next_page), class: 'btn btn-primary btn-sm w-100' do %>
+                    Next Quiz&nbsp;<span class="pull-right"><span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span></span>
+                  <% end %>
               <% end %>
-          <% end %>
-        </div>
-        <div class="col-sm-3">
-          <% if @next_page.is_a?(Video) %>
-            <%= link_to course_video_path(@course, @next_page), class: 'btn btn-primary pull-right' do %>
-              Next Video&nbsp;<span class="pull-right"><span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span></span>
-            <% end %>
-          <% elsif @next_page.is_a?(Quiz)  %>
-            <%= link_to course_quiz_path(@course, @next_page), class: 'btn btn-primary' do %>
-              Next Quiz&nbsp;<span class="pull-right"><span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span></span>
-            <% end %>
-          <% end %>
-        </div>
-      <% else %>
-        <% unless has_viewed(current_user.id, @video.id) %>
-          <div class="col-sm-2">
-            <%= form_tag("/video/complete", method: "post") do %>
-              <%= hidden_field_tag(:user_id, current_user.id) %>
-              <%= hidden_field_tag(:video_id, @video.id) %>
-              <%= hidden_field_tag(:course_id, @course.id) %>
-              <%= hidden_field_tag(:played, true) %>
-              <% if @views.count + @quizzes_taken.count + 1 == @videos.count + @quizzes.count %>
-                <%= submit_tag("Complete Course", class: "btn btn-success") %>
+              <% unless has_viewed(current_user.id, @video.id) %>
+                  <%= form_tag("/video/complete", method: "post") do %>
+                    <%= hidden_field_tag(:user_id, current_user.id) %>
+                    <%= hidden_field_tag(:video_id, @video.id) %>
+                    <%= hidden_field_tag(:course_id, @course.id) %>
+                    <%= hidden_field_tag(:played, true) %>
+                    <%= submit_tag("Complete Lesson", class: "btn btn-success btn-sm w-100") %>
+                  <% end %>
+              <% end %>
+            <% else %>
+              <% unless has_viewed(current_user.id, @video.id) %>
+                    <%= form_tag("/video/complete", method: "post") do %>
+                      <%= hidden_field_tag(:user_id, current_user.id) %>
+                      <%= hidden_field_tag(:video_id, @video.id) %>
+                      <%= hidden_field_tag(:course_id, @course.id) %>
+                      <%= hidden_field_tag(:played, true) %>
+                      <% if @views.count + @quizzes_taken.count + 1 == @videos.count + @quizzes.count %>
+                        <%= submit_tag("Complete Course", class: "btn btn-success btn-sm w-100") %>
+                      <% else %>
+                        <%= submit_tag("Complete Lesson", class: "btn btn-success btn-sm w-100") %>
+                      <% end %>
+                    <% end %>
               <% else %>
-                <%= submit_tag("Complete Lesson", class: "btn btn-success") %>
+                  <%= form_tag("/video/complete", method: "post") do %>
+                    <%= hidden_field_tag(:user_id, current_user.id) %>
+                    <%= hidden_field_tag(:video_id, @video.id) %>
+                    <%= hidden_field_tag(:course_id, @course.id) %>
+                    <%= hidden_field_tag(:played, true) %>
+                    <% if @views.count + @quizzes_taken.count == @videos.count + @quizzes.count %>
+                      <%= submit_tag("Complete Course", class: "btn btn-success btn-sm w-100") %>
+                    <% else %>
+                      <%= submit_tag("Complete Lesson", class: "btn btn-success btn-sm w-100") %>
+                    <% end %>
+                  <% end %>
               <% end %>
             <% end %>
           </div>
-        <% else %>
-          <div class="col-sm-2">
-            <%= form_tag("/video/complete", method: "post") do %>
-              <%= hidden_field_tag(:user_id, current_user.id) %>
-              <%= hidden_field_tag(:video_id, @video.id) %>
-              <%= hidden_field_tag(:course_id, @course.id) %>
-              <%= hidden_field_tag(:played, true) %>
-              <%= submit_tag("Complete Course", class: "btn btn-success") %>
-            <% end %>
-          </div>
-        <% end %>
-      <% end %>
+        </div>
+        <div class="clearfix">
+        </div>
+      </div>
     </div>
-    
-    <script>
+  </div>
+</div>
+<script>
       <% unless has_incomplete_view(current_user.id, @video.id) || has_viewed(current_user.id, @video.id) %>
         jwplayer().on('play', function(e) {
           console.log("started");
@@ -119,5 +145,3 @@
         });
       <% end %>
     </script>
-  </div>
-</div>

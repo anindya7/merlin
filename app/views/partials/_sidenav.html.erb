@@ -1,45 +1,80 @@
-<div id="accordion" class="panel-group">
+
+
+<div class="sm-m-l-5 sm-m-r-5" style=" padding-top:10px;">
+  <div class="card-group horizontal" id="accordion" role="tablist" aria-multiselectable="true">
     <% (1..@course.total_weeks).each do |week| %>
-        <div class="panel panel-default">
-            <div class="panel-heading" data-toggle="collapse" data-parent="#accordion" href="#collapse<%= week %>">
-                <h4 class="panel-title">
-                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse<%= week %>">Week <%= week %></a>
+        <div class="card card-default m-b-0">
+            <div class="card-header " role="tab" id="headingThree">
+                <h4 class="card-title">
+                <% if (@video && @video.week == week) || (@quiz && @quiz.week == week) %>
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse<%= week %>" aria-expanded="true" aria-controls="collapse<%= week %>" class="">
+                     <strong>Week <%= week %></strong>
+                    </a>
+                <% else %>
+                    <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapse<%= week %>" aria-expanded="false" aria-controls="collapse<%= week %>">
+                        Week <%= week %>
+                    </a>
+                <% end %>
                 </h4>
             </div>
-            <div id="collapse<%= week %>" class="panel-collapse collapse <%= 'in' if (@video && @video.week == week)||(@quiz && @quiz.week == week) %>">
-                <div class="panel-body">
-                    <ul class="nav nav-pills nav-stacked">
-                        <% @videos.ordered_in_week(week).each do |video| %>
-                            <% if @video %>
-                                <li class="presentation <%= active_class(video.id, @video.id) %>">
-                            <% else%>
-                                <li class="presentation">
-                            <% end %>
-                                <%= link_to course_video_path(@course, video) do %>
+            <% if (@video && @video.week == week) || (@quiz && @quiz.week == week) %>
+                <div id="collapse<%= week %>" class="collapse show" role="tabcard" aria-labelledby="heading<%= week %>" aria-expanded="true" style="">
+            <% else %>
+                <div id="collapse<%= week %>" class="collapse" role="tabcard" aria-labelledby="heading<%= week %>" aria-expanded="false">
+            <% end %>
+                <div class="card-block"> 
+                    <ul class="nav nav-tabs nav-tabs-simple nav-tabs-left bg-white" id="tab-3" style="width:100%;">
+                    <% @videos.ordered_in_week(week).each do |video| %>
+                        <li class="nav-item">
+                        <% if @video %>
+                            <%= link_to course_video_path(@course, video), { class: active_class(video.id, @video.id), 'aria-expanded' => "true"} do %>
+                                <% if @video.id == video.id %>
+                                    <strong><%= video.name %></strong>
+                                <% else %>
                                     <%= video.name %>
-                                    <% if has_viewed(current_user.id, video.id) %>
-                                        <span class="pull-right"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></span>
-                                    <% end %>
                                 <% end %>
-                            </li>
-                        <% end %>
-                        <% @quizzes.ordered_in_week(week).each do |quiz| %>
-                            <% if @quiz %>
-                                <li class="presentation <%= active_class(quiz.id, @quiz.id) %>">
-                            <% else%>
-                                <li class="presentation">
+                                <% if has_viewed(current_user.id, video.id) %>
+                                    <span class="pull-right"><span class="fs-14 fa fa-check" aria-hidden="true"></span></span>
+                                <% end %>
                             <% end %>
-                                <%= link_to course_quiz_path(@course, quiz) do %>
-                                    <%= quiz.name %>
-                                    <% if has_taken_quiz(current_user.id, quiz.id) %>
-                                        <span class="pull-right"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></span>
-                                    <% end %>
+                        <% else %>
+                            <%= link_to course_video_path(@course, video), { 'aria-expanded' => "true"} do %>
+                                <%= video.name %>
+                                <% if has_viewed(current_user.id, video.id) %>
+                                    <span class="pull-right"><span class="fs-14 fa fa-check" aria-hidden="true"></span></span>
                                 <% end %>
-                            </li>
+                            <% end %>
                         <% end %>
+                        </li>
+                    <% end %>
+                    <% @quizzes.ordered_in_week(week).each do |quiz| %>
+                        <li class="nav-item">
+                        <% if @quiz %>
+                            <%= link_to course_quiz_path(@course, quiz), { class: active_class(quiz.id, @quiz.id), 'aria-expanded' => "true"} do %>
+                                <% if @quiz.id == quiz.id %>
+                                    <strong><%= quiz.name %></strong>
+                                <% else %>
+                                    <%= quiz.name %>
+                                <% end %>
+                                <% if has_taken_quiz(current_user.id, quiz.id) %>
+                                    <span class="pull-right"><span class="fs-14 fa fa-check" aria-hidden="true"></span></span>
+                                <% end %>
+                            <% end %>
+                        <% else%>
+                            <%= link_to course_quiz_path(@course, quiz), { 'aria-expanded' => "true"} do %>
+                                <%= quiz.name %>
+                                <% if has_taken_quiz(current_user.id, quiz.id) %>
+                                    <span class="pull-right"><span class="fs-14 fa fa-check" aria-hidden="true"></span></span>
+                                <% end %>
+                            <% end %>
+                        <% end %>
+                        </li>
+                    <% end %>
                     </ul>
+                    <br>
                 </div>
             </div>
         </div>
     <% end %>
+  </div>
 </div>

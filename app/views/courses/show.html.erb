@@ -1,66 +1,122 @@
-
-<% if @views.count + @quizzes_taken.count == 0 %>
-    <%= link_to "Start Course", course_video_path(@course, @videos.ordered_in_week(1).first), class: 'btn btn-success btn-lg' %>
-<% elsif @views.count + @quizzes_taken.count == @videos.count + @quizzes.count %>
-    <%= link_to course_video_path(@course, @videos.ordered_in_week(1).first), class: 'btn btn-success btn-lg' do %>
-        Course Completed&nbsp;<span class="pull-right"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></span>
-    <% end %>
-<% else %>
-    <% if @next_page.is_a?(Video) %>
-        <%= link_to "Resume Course", course_video_path(@course, @next_page), class: 'btn btn-success btn-lg' %>
-        <h4 class="text-primary">Next Video: Week <%= @next_page.week %> - <%= @next_page.name %></h4>
-    <% elsif @next_page.is_a?(Quiz) %>
-        <%= link_to "Resume Course", course_quiz_path(@course, @next_page), class: 'btn btn-success btn-lg' %>
-        <h4 class="text-primary">Next Quiz: Week <%= @next_page.week %> - <%= @next_page.name %></h4>
-    <% end %>
+<% content_for :heading do %>
+  <%= @course.name %>
 <% end %>
-<br>
-<br>
-<div class="well">
-    <h5>Course completion:</h5>
-    <% completed = (((@views.count.to_f + @quizzes_taken.count.to_f)/(@course.videos.count.to_f + @course.quizzes.count.to_f))*100).to_i %>
-    <div class="progress">
-      <div class="progress-bar" role="progressbar" aria-valuenow="<%= completed %>" aria-valuemin="0" aria-valuemax="100" style="min-width: 2em; width: <%= completed %>%">
-        <%= completed %>%
-      </div>
+<div class="card social-card share full-width m-b-10 no-border">
+    <div class="card-header ">
+        <div class="card-title">
+          <span class="font-montserrat fs-11 all-caps">
+            Course Progress <i class="fa fa-chevron-right"></i>
+          </span>
+        </div>
+        <div class="card-controls">
+        </div>
     </div>
-</div>
-<h3>Course Syllabus</h3>
-<br>
-<div id="accordion" class="panel-group">
-    <% (1..@course.total_weeks).each do |week| %>
-        <div class="panel panel-default">
-            <div class="panel-heading" data-toggle="collapse" data-parent="#accordion" href="#collapse<%= week %>">
-                <h4 class="panel-title">
-                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse<%= week %>">Week <%= week %></a>
-                </h4>
-            </div>
-            <div id="collapse<%= week %>" class="panel-collapse collapse">
-                <div class="panel-body">
-                    <ul class="nav nav-pills nav-stacked">
-                        <% @videos.ordered_in_week(week).each do |video| %>
-                            <li class="presentation">
-                                <%= link_to course_video_path(@course, video) do %>
-                                    <%= video.name %>
-                                    <% if has_viewed(current_user.id, video.id) %>
-                                        <span class="pull-right"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></span>
-                                    <% end %>
-                                <% end %>
-                            </li>
+    <div class="card-block" style="padding:5px; margin:5px;">
+        <div class="row">
+            <div class="col-md-7">
+                <div class="">
+                    <br>
+                    <h3>Course completion: <%= completed = (((@views.count.to_f + @quizzes_taken.count.to_f)/(@course.videos.count.to_f + @course.quizzes.count.to_f))*100).to_i %>%</h3>
+                    <div class="progress">
+                        <% if completed > 75 %>
+                            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="<%= completed %>" aria-valuemin="0" aria-valuemax="100" style="min-width: 2em; width: <%= completed %>%">
+                            <%= completed %>%
+                          </div>
+                        <% elsif completed > 45 %>
+                            <div class="progress-bar progress-bar-complete" role="progressbar" aria-valuenow="<%= completed %>" aria-valuemin="0" aria-valuemax="100" style="min-width: 2em; width: <%= completed %>%">
+                                <%= completed %>%
+                              </div>
+                        <% else %>
+                            <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="<%= completed %>" aria-valuemin="0" aria-valuemax="100" style="min-width: 2em; width: <%= completed %>%">
+                                <%= completed %>%
+                              </div>
                         <% end %>
-                        <% @quizzes.ordered_in_week(week).each do |quiz| %>
-                            <li class="presentation">
-                                <%= link_to course_quiz_path(@course, quiz) do %>
-                                    <%= quiz.name %>
-                                    <% if has_taken_quiz(current_user.id, quiz.id) %>
-                                        <span class="pull-right"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></span>
-                                    <% end %>
-                                <% end %>
-                            </li>
-                        <% end %>
-                    </ul>
+                    </div>
                 </div>
             </div>
+            <div class="col-md-5 text-center" style="margin-top: 7px; padding: 5px;">
+
+                <% if @views.count + @quizzes_taken.count == 0 %>
+                    <%= link_to "Start Course", course_video_path(@course, @videos.ordered_in_week(1).first), class: 'btn btn-success btn-lg' %>
+                <% elsif @views.count + @quizzes_taken.count == @videos.count + @quizzes.count %>
+                    <%= link_to course_video_path(@course, @videos.ordered_in_week(1).first), class: 'btn btn-success btn-lg' do %>
+                        Course Completed&nbsp;<span class="pull-right"><span class="fs-14 fa fa-check" aria-hidden="true"></span></span>
+                    <% end %>
+                <% else %>
+                    <% if @next_page.is_a?(Video) %>
+                        <%= link_to course_video_path(@course, @next_page), class: 'btn btn-success btn-lg' do %>
+                            <strong>Resume Course&nbsp;&nbsp;<span class="pull-right"><span class="fs-14 sl-screen-desktop" aria-hidden="true"></span></span></strong>
+                        <% end %>
+                        <h4 class="text-primary">Next Video: <strong>Week <%= @next_page.week %> - <%= @next_page.name %></strong></h4>
+                    <% elsif @next_page.is_a?(Quiz) %>
+                        <%= link_to course_quiz_path(@course, @next_page), class: 'btn btn-success btn-lg' do %>
+                            <strong>Resume Course&nbsp;&nbsp;<span class="pull-right"><span class="fs-14 sl-screen-desktop" aria-hidden="true"></span></span></strong>
+                        <% end %>
+                        <h4 class="text-primary">Next Quiz: <strong>Week <%= @next_page.week %> - <%= @next_page.name %></strong> </h4>
+                    <% end %>
+                <% end %>
+            </div>
         </div>
-    <% end %>
+    </div>
 </div>
+
+
+<div class="card social-card share  full-width m-b-10 no-border">
+    <div class="card-header ">
+        <div class="card-title">
+          <span class="font-montserrat fs-11 all-caps">
+            Course Syllabus <i class="fa fa-chevron-right"></i>
+          </span>
+        </div>
+        <div class="card-controls">
+        </div>
+    </div>
+    <div class="card-block">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="sm-m-l-5 sm-m-r-5" style=" padding-top:10px;">
+                  <div class="card-group horizontal" id="accordion" role="tablist" aria-multiselectable="true">
+                    <% (1..@course.total_weeks).each do |week| %>
+                        <div class="card card-default m-b-0">
+                            <div class="card-header " role="tab" id="headingThree">
+                                <h4 class="card-title">
+                                    <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapse<%= week %>" aria-expanded="false" aria-controls="collapse<%= week %>">
+                                        <strong>Week <%= week %></strong>
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="collapse<%= week %>" class="collapse" role="tabcard" aria-labelledby="heading<%= week %>" aria-expanded="false">
+                                <div class="card-block"> 
+                                    <ul class="nav nav-tabs nav-tabs-simple nav-tabs-left bg-white" id="tab-3" style="width:100%;">
+                                        <% @videos.ordered_in_week(week).each do |video| %>
+                                            <li class="nav-item">
+                                                <%= link_to course_video_path(@course, video), {'aria-expanded' => "true"} do %>
+                                                    <strong><%= video.name %></strong>
+                                                    <% if has_viewed(current_user.id, video.id) %>
+                                                        <span class="pull-right"><span class="fs-14 fa fa-check" aria-hidden="true"></span></span>
+                                                    <% end %>
+                                                <% end %>
+                                            </li>
+                                        <% end %>
+                                        <% @quizzes.ordered_in_week(week).each do |quiz| %>
+                                            <li class="nav-item">
+                                                <%= link_to course_quiz_path(@course, quiz), { 'aria-expanded' => "true"} do %>
+                                                    <strong><%= quiz.name %></strong>
+                                                    <% if has_taken_quiz(current_user.id, quiz.id) %>
+                                                        <span class="pull-right"><span class="fs-14 fa fa-check" aria-hidden="true"></span></span>
+                                                    <% end %>
+                                                <% end %>
+                                            </li>
+                                        <% end %>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    <% end %>
+                  </div>
+                </div>                
+            </div>
+        </div>
+    </div>
+</div>
+

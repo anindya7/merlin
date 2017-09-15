@@ -78,6 +78,13 @@ class QuizzesController < ApplicationController
     send_data data.read, filename: "w1v1.pdf", type: "application/pdf", disposition: 'inline', stream: 'true', buffer_size: '4096'
   end
 
+  def download_audio
+    # download = open('https://upload.wikimedia.org/wikipedia/en/3/33/Silicon_valley_title.png')
+    # IO.copy_stream(download, '~/image.png')
+    data = open("http://www.sample-videos.com/audio/mp3/crowd-cheering.mp3") 
+    send_data data.read, filename: "w1v1.mp3", type: "audio/mpeg3", disposition: 'inline', stream: 'true', buffer_size: '4096'
+  end
+
   def qs_params
     params.permit(:user_id, :quiz_id, :course_id)
   end
