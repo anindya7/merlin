@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
 
   def layout_by_resource
     if (devise_controller? && resource_name == :user && action_name != 'edit') || 
-      (controller_name.eql?('home') && action_name == 'index')
+      (controller_name.eql?('home') && action_name == 'refer')
       "homepages"
     else
       "application"
@@ -19,6 +19,14 @@ class ApplicationController < ActionController::Base
   end
 
   def after_sign_in_path_for(resource)
-    courses_path
+    if resource.admin?
+      rails_admin_path
+    else
+      courses_path
+    end
   end
+
+  # def after_sign_out_path_for(resource)
+  #   new_user_registration_path
+  # end
 end

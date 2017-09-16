@@ -13,11 +13,12 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-touch-fullscreen" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <meta content="" name="description">
-    <meta content="" name="author">
+    <meta content="India's first 4 week course of building mental resilience against stress, anxiety and depression using cognitive behavioral therapy" name="description">
+    <meta content="AvalonLabsIndia" name="author">
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <!-- <link class="main-stylesheet" href="/pages/css/pages.css" rel="stylesheet" type="text/css"> -->
   <style type="text/css">.jqstooltip { position: absolute;left: 0px;top: 0px;visibility: hidden;background: rgb(0, 0, 0) transparent;background-color: rgba(0,0,0,0.6);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000);-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000)";color: white;font: 10px arial, san serif;text-align: left;white-space: nowrap;padding: 5px;border: 1px solid white;z-index: 10000;}.jqsfield { color: white;font: 10px arial, san serif;text-align: left;}</style>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
 </head>
   <body class="fixed-header horizontal-menu horizontal-app-menu dashboard  windows desktop pace-done"><div class="pace  pace-inactive"><div class="pace-progress" data-progress-text="100%" data-progress="99" style="transform: translate3d(100%, 0px, 0px);">
   <div class="pace-progress-inner"></div>
@@ -29,7 +30,7 @@
         <div class="header-inner header-md-height">
           
           <div class="">
-            <h2 style="color:white"><strong><%= link_to "Calm India", courses_path, style: 'color:white' %></strong></h2>
+            <h2 style="color:white"><%= link_to "CALMINDIA", courses_path, style: 'color:white' %></h2>
           </div>
           <div class="d-flex align-items-center">
             <!-- START User Info-->
@@ -41,8 +42,13 @@
                 <span class="pull-right" style="color:white"><span class="fs-14 pg-menu" aria-hidden="true"></span></span>
               </button>
               <div class="dropdown-menu dropdown-menu-right profile-dropdown" role="menu">
-                <a href="#" class="dropdown-item"><i class="pg-settings_small"></i> Settings</a>
-                <%= link_to "Sign out", destroy_user_session_path, :method => :delete, class: 'clearfix bg-master-lighter dropdown-item' %>
+                <% if current_user %>
+                  <%= link_to"<i class='pg-settings_small'></i> Settings".html_safe, edit_registration_path(current_user), class: 'dropdown-item' %>
+                  <%= link_to destroy_user_session_path, :method => :delete, class: 'clearfix bg-master-lighter dropdown-item' do %>
+                    <span class="pull-left">Logout</span>
+                    <span class="pull-right"><i class="pg-power"></i></span>
+                  <% end %>
+                <% end %>
               </div>
             </div>
             <!-- END User Info-->
@@ -51,7 +57,7 @@
         </div>
         <div class="header-inner justify-content-start header-lg-height title-bar">
           <div class="brand inline align-self-end">
-            <img src="/assets/img/logo_s.png" alt="logo" data-src="/assets/img/logo_s.png" data-src-retina="/assets/img/logo_s_2x.png" width="17" height="20">
+            <%= image_tag("favicon.png", size:"16x16", alt: "logo") %>
           </div>
           <h2 class="page-title align-self-end"><%= yield(:heading).empty? ? 'Dashboard' : yield(:heading)%></h2>
         </div>
@@ -67,7 +73,10 @@
           <div data-pages="parallax">
             <div class=" container no-padding    container-fixed-lg">
               <div class="inner" style="transform: translateY(0px); opacity: 1;">
-                <!-- START BREADCRUMB --><br>
+                <!-- START BREADCRUMB -->
+                <br>
+                <%= render 'partials/flash' %>
+                <br>
               </div>
             </div>
           </div>
@@ -85,13 +94,14 @@
         <div class=" container   container-fixed-lg footer">
           <div class="copyright sm-text-center">
             <p class="small no-margin pull-left sm-pull-reset">
-              <span class="hint-text">Copyright © 2017 </span>
-              <span class="font-montserrat">REVOX</span>.
-              <span class="hint-text">All rights reserved. </span>
-              <span class="sm-block"><a href="#" class="m-l-10 m-r-10">Terms of use</a> <span class="muted">|</span> <a href="#" class="m-l-10">Privacy Policy</a></span>
+              <span class="hint-text">Copyright © <%= Date.today.year %> </span>
+              <span class="hint-text"><b>CalmIndia</b></span>.
+              <span class="hint-text">Hand crafted by the folks at <%= link_to "Avalon Labs", "http://avalonlabs.co"%> &nbsp; | </span> 
+              <span class="sm-block"><a href="#" class="m-l-10 m-r-10">Terms of use</a>  <span class="hint-text"> |  </span> <a href="#" class="m-l-10">Privacy Policy</a></span>
+              <br/>
             </p>
             <p class="small no-margin pull-right sm-pull-reset">
-              Hand-crafted <span class="hint-text">&amp; made with Love</span>
+              <b><%= ["Fall seven times, stand up eight. ~ Japanese proverb", "I walk slowly, but I never walk backward. ~ Abraham Lincoln", "If you’re going through Hell, keep going. ~ Winston Churchill", "Pain is temporary. ~ Lance Armstrong", "Once you choose hope, anything is possible. ~ Christopher Reeve", "Minds are like parachutes, they function only when open. ~ Unknown Author"].sample%></b> 
             </p>
             <div class="clearfix"></div>
           </div>
@@ -242,7 +252,7 @@
     </div>
     <!-- END OVERLAY -->
     <!-- BEGIN VENDOR JS -->
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    
    
     <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"><div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div></div>
     <!-- END CORE TEMPLATE JS -->

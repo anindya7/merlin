@@ -1,6 +1,15 @@
 Rails.application.routes.draw do
-  mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
+  mount RailsAdmin::Engine => '/mercmerc', as: 'rails_admin'
   devise_for :users, controllers: { :registrations => "users/registrations" }
+  devise_scope :user do
+    authenticated :user do
+      root 'courses#index', as: :authenticated_root
+    end
+
+    unauthenticated do
+      root 'devise/registrations#new', as: :unauthenticated_root
+    end
+  end
   resources :courses, only: [:index, :show] do
     resources :videos, only: [:show]
     resources :quizzes, only: [:show]
@@ -14,6 +23,9 @@ Rails.application.routes.draw do
   get '/video/pdf' => 'videos#download_pdf'
   get '/quiz/audio' => 'quizzes#download_audio'
   get '/video/audio' => 'videos#download_audio'
-  root "home#index"
+  get '/refer' => 'home#refer'
+  post '/refer' => 'home#submit_refer'
+  # root "home#index"
+  # root :to => 'users/registrations#new'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

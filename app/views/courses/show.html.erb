@@ -17,7 +17,7 @@
                 <div class="">
                     <br>
                     <h3>Course completion: <%= completed = (((@views.count.to_f + @quizzes_taken.count.to_f)/(@course.videos.count.to_f + @course.quizzes.count.to_f))*100).to_i %>%</h3>
-                    <div class="progress">
+                    <div class="progress" style="height:100%">
                         <% if completed > 75 %>
                             <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="<%= completed %>" aria-valuemin="0" aria-valuemax="100" style="min-width: 2em; width: <%= completed %>%">
                             <%= completed %>%

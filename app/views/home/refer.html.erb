@@ -1,0 +1,27 @@
+
+<div class="row">
+  <div class="col-md-4 offset-md-4">
+    <div class="card">
+      <div class="card-header">
+        <h3>Refer a Friend</h3>
+      </div>
+      <div class="card-block">
+        <%= simple_form_for(:refer, url: refer_path, html: { method: :post }) do |f| %>
+          <%= f.error_notification %>
+
+          <div class="form-inputs">
+            <%= f.input :name, label: 'Your Name' %>
+            <%= f.input :email, label: 'Your Email Address', autofocus: true %>
+            <%= f.input :refer_name, label: 'Your Friend\'s Name' %>
+            <%= f.input :refer_email, label: 'Your Friend\'s Email' %>
+          </div>
+          <div class="form-actions">
+            <%= f.submit "Submit", class: 'btn btn-success' %>
+          </div>
+        <% end %>
+        <br>
+        <%= link_to 'Login', new_user_session_path, class: 'btn btn-primary btn-sm' %>
+      </div>
+    </div>
+  </div>
+</div>

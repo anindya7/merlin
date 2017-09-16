@@ -1,8 +1,11 @@
 class Course < ApplicationRecord
-  has_many :videos
-  has_many :views
-  has_many :quizzes, class_name: 'Quiz'
-  has_many :quiz_scores, class_name: 'QuizScore'
+  has_many :videos, dependent: :destroy
+  has_many :views, dependent: :destroy
+  has_many :quizzes, class_name: 'Quiz', dependent: :destroy
+  has_many :quiz_scores, class_name: 'QuizScore', dependent: :destroy
+
+  validates_presence_of :total_weeks, :name, :description
+  validates_uniqueness_of :name
 
   def next_page(user)
     unless self.views.where(played: false).last.nil?

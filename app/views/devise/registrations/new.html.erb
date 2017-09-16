@@ -1,32 +1,45 @@
-<h2>Sign up</h2>
-
-<%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: {class: 'form_horizontal'}) do |f| %>
-  <%= f.error_notification %>
-
-  <div class="form-inputs">
-    <%= f.input :email, required: true, autofocus: true %>
-    <%= f.input :password, required: true, hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length) %>
-    <%= f.input :password_confirmation, required: true %>
+<div class="row">
+  <div class="col-md-4 offset-md-4">
+    <div class="card">
+      <div class="card-block">
+        <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: {class: 'form_horizontal', role: "form"}) do |f| %>
+          <%= f.error_notification %>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group form-group-default">
+                <%= f.input :email, required: true, autofocus: true, class: "form-control" %>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group form-group-default">
+                <%= f.input :password, required: true, hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length), class: "form-control" %>
+              </div>
+            </div>
+          </div>
+          <form action="/users" method="POST">
+            <!-- Note that the amount is in paise = 50 INR -->
+            <script
+                src="https://checkout.razorpay.com/v1/checkout.js"
+                data-key="<%= ENV['RAZORPAY_ID'] %>"
+                data-amount="100"
+                data-buttontext="Pay Rs. 299 with Razorpay"
+                data-name="Calm India"
+                data-description="A 4 WEEK COURSE ON BUILDING MENTAL RESILIENCE, TAILORED FOR INDIA."
+                data-image="https://your-awesome-site.com/your_logo.jpg"
+                data-prefill.name=""
+                data-prefill.email=""
+                data-theme.color="#F37254"
+            ></script>
+            <input type="hidden" value="Hidden Element" name="hidden">
+          </form>
+        <% end %>
+        <br>
+        <p><strong>- OR -</strong></p>
+        <br>
+        <%= render "devise/shared/links" %>
+      </div>
+    </div>
   </div>
-  <form action="/users" method="POST">
-    <!-- Note that the amount is in paise = 50 INR -->
-    <script
-        src="https://checkout.razorpay.com/v1/checkout.js"
-        data-key="<%= ENV['RAZORPAY_ID'] %>"
-        data-amount="100"
-        data-buttontext="Pay with Razorpay"
-        data-name="Calm India"
-        data-description="A 4 WEEK COURSE ON BUILDING MENTAL RESILIENCE, TAILORED FOR INDIA."
-        data-image="https://your-awesome-site.com/your_logo.jpg"
-        data-prefill.name=""
-        data-prefill.email=""
-        data-theme.color="#F37254"
-    ></script>
-    <input type="hidden" value="Hidden Element" name="hidden">
-  </form>
-  <!-- <div class="form-actions"> -->
-    <%#= f.button :submit, "Sign up" %>
-  <!-- </div> -->
-<% end %>
-<br>
-<%= render "devise/shared/links" %>
+</div>

@@ -1,7 +1,10 @@
 class Quiz < ApplicationRecord
   has_many :questions
   belongs_to :course
-  has_many :quiz_scores, class_name: "QuizScore"
+  has_many :quiz_scores, class_name: "QuizScore", dependent: :destroy
+
+  validates_presence_of :name, :course_id, :week, :order_in_week
+  validates_uniqueness_of :course_id, scope: [:week, :order_in_week]
 
   def self.ordered_in_week(week)
     where(week: week).order(:order_in_week)

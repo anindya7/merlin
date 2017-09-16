@@ -4,5 +4,9 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  has_many :views
+  has_many :views, dependent: :destroy
+
+  def admin?
+    admin == true
+  end
 end

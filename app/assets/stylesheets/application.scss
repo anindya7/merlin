@@ -16,19 +16,9 @@
  */
 
 .razorpay-payment-button {
-  background-color: #003c79 !important;
-  border-color: #15548b !important;
+  background-color: #536DFE !important;
+  border-color: #536DFE !important;
   color: #fff;
-}
-
-.razorpay-payment-button:hover {
-  background-color: #4289c6 !important;
-  border-color: #3877ae !important;
-  color: #fff;
-}
-
-.razorpay-payment-button.focus, .razorpay-payment-button:focus {
-   background-color: #4289c6 !important;
-   border-color: #3877ae !important;
-   color: #fff;
+  padding:5px;
+  border-radius: 5px;
 }

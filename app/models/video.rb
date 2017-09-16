@@ -1,7 +1,10 @@
 class Video < ApplicationRecord
   scope :ordered_in_week, -> {order(:attr => :val)}
   belongs_to :course
-  has_many :views
+  has_many :views, dependent: :destroy
+
+  validates_presence_of :url, :course_id, :name, :description, :week, :order_in_week, :pdf_url
+  validates_uniqueness_of :course_id, scope: [:week, :order_in_week]
 
   def self.ordered_in_week(week)
     where(week: week).order(:order_in_week)

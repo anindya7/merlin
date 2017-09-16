@@ -14,23 +14,28 @@ class Users::RegistrationsController < Devise::RegistrationsController
     # render json: params
     build_resource(sign_up_params)
     resource.razorpay_payment_id = params[:razorpay_payment_id]
-    Razorpay::Payment.fetch(params[:razorpay_payment_id]).capture({amount:100})
-    resource.save
-    yield resource if block_given?
-    if resource.persisted?
-      if resource.active_for_authentication?
-        set_flash_message! :notice, :signed_up
-        sign_up(resource_name, resource)
-        respond_with resource, location: after_sign_up_path_for(resource)
+    response = Razorpay::Payment.fetch(params[:razorpay_payment_id]).capture({amount:100})
+    unless response.nil?
+      resource.save
+      yield resource if block_given?
+      if resource.persisted?
+        if resource.active_for_authentication?
+          set_flash_message! :notice, :signed_up
+          sign_up(resource_name, resource)
+          respond_with resource, location: after_sign_up_path_for(resource)
+        else
+          set_flash_message! :notice, :"signed_up_but_#{resource.inactive_message}"
+          expire_data_after_sign_in!
+          respond_with resource, location: after_inactive_sign_up_path_for(resource)
+        end
       else
-        set_flash_message! :notice, :"signed_up_but_#{resource.inactive_message}"
-        expire_data_after_sign_in!
-        respond_with resource, location: after_inactive_sign_up_path_for(resource)
+        clean_up_passwords resource
+        set_minimum_password_length
+        respond_with resource
       end
     else
-      clean_up_passwords resource
-      set_minimum_password_length
-      respond_with resource
+      flash[:notice] = "Error while signing up"
+      redirect_to root_path
     end
   end
 
@@ -61,8 +66,17 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # protected
 
   # If you have extra params to permit, append them to the sanitizer.
-  def configure_sign_up_params
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:razorpay_payment_id])
+  # def configure_sign_up_params
+  #   devise_parameter_sanitizer.permit(:sign_up, keys: [:razorpay_payment_id])
+  # end
+
+  def configure_permitted_parameters
+    devise_parameter_sanitizer.for(:sign_up) do |u|
+      u.permit(:email, :password, :password_confirmation, keys: [:razorpay_payment_id])
+    end
+    devise_parameter_sanitizer.for(:account_update) do |u|
+      u.permit(:email, :password, :password_confirmation, :current_password)
+    end
   end
 
   # If you have extra params to permit, append them to the sanitizer.
