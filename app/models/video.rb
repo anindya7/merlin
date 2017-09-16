@@ -3,7 +3,7 @@ class Video < ApplicationRecord
   belongs_to :course
   has_many :views, dependent: :destroy
 
-  validates_presence_of :url, :course_id, :name, :description, :week, :order_in_week, :pdf_url
+  validates_presence_of :url, :course_id, :name, :description, :week, :order_in_week
   validates_uniqueness_of :course_id, scope: [:week, :order_in_week]
 
   def self.ordered_in_week(week)
