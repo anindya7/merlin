@@ -30,62 +30,64 @@
         <script src="<%= @video.url %>"></script>
       </div>
       <div class="card-footer clearfix">
-        <div class="pull-left">
-          <%= link_to video_pdf_path, class: 'btn btn-complete', title: 'Download PDF' do %>
-            Download PDF&nbsp;&nbsp;<i class="fa fa-file-pdf-o"></i>
-          <% end %>
-        </div>
-        <div class="pull-right hint-text">
-          <div class="btn-group">
-            <% unless @next_page.nil? %>
-              <% if @next_page.is_a?(Video) %>
-                  <%= link_to course_video_path(@course, @next_page), class: 'btn btn-primary btn-sm w-100' do %>
-                    Next Video&nbsp;<span class="pull-right"><span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span></span>
-                  <% end %>
-              <% elsif @next_page.is_a?(Quiz)  %>
-                  <%= link_to course_quiz_path(@course, @next_page), class: 'btn btn-primary btn-sm w-100' do %>
-                    Next Quiz&nbsp;<span class="pull-right"><span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span></span>
-                  <% end %>
-              <% end %>
-              <% unless has_viewed(current_user.id, @video.id) %>
-                  <%= form_tag("/video/complete", method: "post") do %>
-                    <%= hidden_field_tag(:user_id, current_user.id) %>
-                    <%= hidden_field_tag(:video_id, @video.id) %>
-                    <%= hidden_field_tag(:course_id, @course.id) %>
-                    <%= hidden_field_tag(:played, true) %>
-                    <%= submit_tag("Complete Lesson", class: "btn btn-success btn-sm w-100") %>
-                  <% end %>
-              <% end %>
-            <% else %>
-              <% unless has_viewed(current_user.id, @video.id) %>
+        <div class="row">
+          <div class="col-sm-4">
+            <%= link_to video_pdf_path, class: 'btn btn-complete', title: 'Download PDF', style: 'margin-top:5px;' do %>
+              Download PDF&nbsp;&nbsp;<i class="fa fa-file-pdf-o"></i>
+            <% end %>
+          </div>
+          <div class="col-sm-8">
+            <div class="btn-group pull-right" style="margin-top:5px;">
+              <% unless @next_page.nil? %>
+                <% if @next_page.is_a?(Video) %>
+                    <%= link_to course_video_path(@course, @next_page), class: 'btn btn-primary btn-sm w-100' do %>
+                      Next Video&nbsp;<span class="pull-right"><span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span></span>
+                    <% end %>
+                <% elsif @next_page.is_a?(Quiz)  %>
+                    <%= link_to course_quiz_path(@course, @next_page), class: 'btn btn-primary btn-sm w-100' do %>
+                      Next Quiz&nbsp;<span class="pull-right"><span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span></span>
+                    <% end %>
+                <% end %>
+                <% unless has_viewed(current_user.id, @video.id) %>
                     <%= form_tag("/video/complete", method: "post") do %>
                       <%= hidden_field_tag(:user_id, current_user.id) %>
                       <%= hidden_field_tag(:video_id, @video.id) %>
                       <%= hidden_field_tag(:course_id, @course.id) %>
                       <%= hidden_field_tag(:played, true) %>
-                      <% if @views.count + @quizzes_taken.count + 1 == @videos.count + @quizzes.count %>
+                      <%= submit_tag("Complete Lesson", class: "btn btn-success btn-sm w-100") %>
+                    <% end %>
+                <% end %>
+              <% else %>
+                <% unless has_viewed(current_user.id, @video.id) %>
+                      <%= form_tag("/video/complete", method: "post") do %>
+                        <%= hidden_field_tag(:user_id, current_user.id) %>
+                        <%= hidden_field_tag(:video_id, @video.id) %>
+                        <%= hidden_field_tag(:course_id, @course.id) %>
+                        <%= hidden_field_tag(:played, true) %>
+                        <% if @views.count + @quizzes_taken.count + 1 == @videos.count + @quizzes.count %>
+                          <%= submit_tag("Complete Course", class: "btn btn-success btn-sm w-100") %>
+                        <% else %>
+                          <%= submit_tag("Complete Lesson", class: "btn btn-success btn-sm w-100") %>
+                        <% end %>
+                      <% end %>
+                <% else %>
+                    <%= form_tag("/video/complete", method: "post") do %>
+                      <%= hidden_field_tag(:user_id, current_user.id) %>
+                      <%= hidden_field_tag(:video_id, @video.id) %>
+                      <%= hidden_field_tag(:course_id, @course.id) %>
+                      <%= hidden_field_tag(:played, true) %>
+                      <% if @views.count + @quizzes_taken.count == @videos.count + @quizzes.count %>
                         <%= submit_tag("Complete Course", class: "btn btn-success btn-sm w-100") %>
                       <% else %>
                         <%= submit_tag("Complete Lesson", class: "btn btn-success btn-sm w-100") %>
                       <% end %>
                     <% end %>
-              <% else %>
-                  <%= form_tag("/video/complete", method: "post") do %>
-                    <%= hidden_field_tag(:user_id, current_user.id) %>
-                    <%= hidden_field_tag(:video_id, @video.id) %>
-                    <%= hidden_field_tag(:course_id, @course.id) %>
-                    <%= hidden_field_tag(:played, true) %>
-                    <% if @views.count + @quizzes_taken.count == @videos.count + @quizzes.count %>
-                      <%= submit_tag("Complete Course", class: "btn btn-success btn-sm w-100") %>
-                    <% else %>
-                      <%= submit_tag("Complete Lesson", class: "btn btn-success btn-sm w-100") %>
-                    <% end %>
-                  <% end %>
+                <% end %>
               <% end %>
-            <% end %>
+            </div>
           </div>
-        </div>
-        <div class="clearfix">
+          <div class="clearfix">
+          </div>
         </div>
       </div>
     </div>

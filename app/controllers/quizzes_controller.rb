@@ -48,29 +48,38 @@ class QuizzesController < ApplicationController
 
   def submit
     scores = params[:quiz_score][:questions]
-    @course = Course.find(params[:quiz_score][:course_id])
-    @videos = @course.videos
-    @quizzes = @course.quizzes
-    @quiz = Quiz.find(params[:quiz_score][:quiz_id])
-    @views = @course.views.user_views(current_user.id)
-    @next_page = @quiz.next_page
-    @total = 0
-    unless scores.nil?
-      scores.each do |key, value|
-        if value.present?
-          @total += value.to_i
+    if scores.nil?
+      flash[:alert] = "Please answer all questions and submit quiz."
+      redirect_to request.referrer
+    else
+      @quiz = Quiz.find(params[:quiz_score][:quiz_id])
+      if scores.values.count < @quiz.questions.count
+        flash[:alert] = "Please answer all questions and submit quiz."
+        redirect_to request.referrer
+      else
+        @course = Course.find(params[:quiz_score][:course_id])
+        @videos = @course.videos
+        @quizzes = @course.quizzes
+
+        @views = @course.views.user_views(current_user.id)
+        @next_page = @quiz.next_page
+        @total = 0
+        scores.each do |key, value|
+          if value.present?
+            @total += value.to_i
+          end
         end
+        unless QuizScore.where(user_id: current_user.id, quiz_id: @quiz.id).any?
+          QuizScore.create(
+            user_id: current_user.id, 
+            quiz_id: @quiz.id, 
+            course_id: @course.id,
+            taken: true
+          )
+        end
+        render :show
       end
     end
-    unless QuizScore.where(user_id: current_user.id, quiz_id: @quiz.id).any?
-      QuizScore.create(
-        user_id: current_user.id, 
-        quiz_id: @quiz.id, 
-        course_id: @course.id,
-        taken: true
-      )
-    end
-    render :show
   end
 
   def download_pdf
