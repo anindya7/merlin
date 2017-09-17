@@ -1,5 +1,6 @@
 class HomeController < ApplicationController
   before_action :check_guest, only: [:index]
+  before_action :authenticate_user!, only: [:refer, :submit_refer]
 
   def index 
   end
@@ -10,9 +11,11 @@ class HomeController < ApplicationController
 
   def submit_refer
     referral = params[:refer]
-    Referral.create(name: referral[:name], email: referral[:email], refer_name: referral[:refer_name], refer_email: referral[:refer_email])
-    # ReferMailer.invite_mail(referral[:name], referral[:email], referral[:refer_name], referral[:refer_email]).deliver
-    flash[:notice] = "You have successfully referred your friend!"
-    redirect_to refer_path
+    ref = Referral.new(name: referral[:name], refer_name: referral[:refer_name], refer_email: referral[:refer_email])
+    ref.email = current_user.email
+    ref.save
+    ReferMailer.invite_mail(referral[:name], current_user.email, referral[:refer_name], referral[:refer_email]).deliver
+    flash[:notice] = "Thanks for referring your friend!"
+    redirect_to courses_path
   end
 end
