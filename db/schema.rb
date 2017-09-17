@@ -33,8 +33,6 @@ ActiveRecord::Schema.define(version: 20170916125530) do
   create_table "option_sets_options", id: false, force: :cascade do |t|
     t.bigint "option_id", null: false
     t.bigint "option_set_id", null: false
-    t.index ["option_id"], name: "index_option_sets_options_on_option_id"
-    t.index ["option_set_id"], name: "index_option_sets_options_on_option_set_id"
   end
 
   create_table "options", force: :cascade do |t|
@@ -64,8 +62,6 @@ ActiveRecord::Schema.define(version: 20170916125530) do
     t.datetime "updated_at", null: false
     t.index ["course_id"], name: "index_quiz_scores_on_course_id"
     t.index ["quiz_id"], name: "index_quiz_scores_on_quiz_id"
-    t.index ["user_id", "course_id", "quiz_id"], name: "index_quiz_scores_on_user_id_and_course_id_and_quiz_id"
-    t.index ["user_id", "course_id"], name: "index_quiz_scores_on_user_id_and_course_id"
     t.index ["user_id"], name: "index_quiz_scores_on_user_id"
   end
 

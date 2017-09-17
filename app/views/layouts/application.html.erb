@@ -72,10 +72,13 @@
           <!-- START JUMBOTRON -->
           <div data-pages="parallax">
             <div class=" container no-padding    container-fixed-lg">
+            <%= render 'partials/flash' %>
               <div class="inner" style="transform: translateY(0px); opacity: 1;">
                 <!-- START BREADCRUMB -->
-                <%= link_to "REFER A FRIEND", refer_path, class: 'btn btn-xs text-complete pull-right', style: 'margin-bottom:10px' %>
-                <%= render 'partials/flash' %>
+                <div class="card card-default" style="width:500px; margin:50px auto 0 auto; background-color:#c8e6fb;">
+                <h2 class="text-center"> Gift a friend hope. </h2>
+                <%= link_to "REFER A FRIEND", refer_path, class: 'btn btn-complete btn-sm', style: 'display:block; width:200px; margin:0 auto 10px auto;' %>
+                </div>
                 <br>
               </div>
             </div>

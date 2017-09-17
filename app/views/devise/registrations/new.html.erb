@@ -5,17 +5,18 @@
         <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: {class: 'form_horizontal', role: "form"}) do |f| %>
           <%= f.error_notification %>
           <div class="row">
-            <div class="col-md-12">
-              <div class="form-group form-group-default">
-                <%= f.input :email, required: true, autofocus: true, class: "form-control" %>
+            <div class="col-md-12" >
+              <div class="form-group form-group-default" >
+                <%= f.input :email, required: true, autofocus: true, class: "form-control", placeholder:"example@example.com"%>
               </div>
             </div>
           </div>
           <div class="row">
             <div class="col-md-12">
               <div class="form-group form-group-default">
-                <%= f.input :password, required: true, hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length), class: "form-control" %>
+                <%= f.input :password, required: true, class: "form-control", placeholder:"#{@minimum_password_length} characters minimum" %>
               </div>
+              <br/>
             </div>
           </div>
           <form action="/users" method="POST">
@@ -24,7 +25,7 @@
                 src="https://checkout.razorpay.com/v1/checkout.js"
                 data-key="<%= ENV['RAZORPAY_ID'] %>"
                 data-amount="100"
-                data-buttontext="Pay Rs. 299 with Razorpay"
+                data-buttontext="Sign Up with RazorPay (₹299)"
                 data-name="Calm India"
                 data-description="A 4 WEEK COURSE ON BUILDING MENTAL RESILIENCE, TAILORED FOR INDIA."
                 data-image="https://your-awesome-site.com/your_logo.jpg"
@@ -36,10 +37,9 @@
           </form>
         <% end %>
         <br>
-        <p><strong>- OR -</strong></p>
-        <br>
-        <%= render "devise/shared/links" %>
+        
       </div>
     </div>
+    <%= render "devise/shared/links" %>
   </div>
 </div>

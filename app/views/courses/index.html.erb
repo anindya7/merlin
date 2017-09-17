@@ -7,7 +7,15 @@
         <br>
         <% @courses.each do |course| %>
           <div class="card social-card share  full-width m-b-10" data-social="item">
+
+
             <div class="card-description" style="padding-bottom:0px;">
+
+            <div class="row">
+            <div class="col-md-3">
+            <%= image_tag "faraz.png"%>
+</div>
+<div class="col-md-9">         
               <h4 style="width:100%;padding-left:10px; padding-right:10px;padding-bottom:0px;margin-bottom:0px;">
                 <%= link_to course_path(course) do %>
                   <strong><%= course.name %></strong>
@@ -17,8 +25,10 @@
                 <% end %>
                 <p style="opacity:0.7"><%= course.description %></p>
               </h4>
-            </div>
-            <div class="card-footer clearfix" style="padding-left:25px;">
+            
+
+
+            <div class="card-footer clearfix" style="padding-left:10px;">
               <% completed = (((course.views.user_views(current_user.id).count.to_f + course.quiz_scores.user_taken(current_user.id).count.to_f)/(course.videos.count.to_f + course.quizzes.count.to_f))*100).to_i %>
                 <div class="progress" style="height:100%">
                     <% if completed > 75 %>
@@ -58,7 +68,10 @@
               </div>
               <div class="clearfix"></div>
             </div>
+
+</div>
+</div>
           </div>
       <% end %>
       </div>
-</div>
+</div></div>

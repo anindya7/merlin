@@ -6,28 +6,29 @@
           <div class="row">
             <div class="col-md-12">
               <div class="form-group form-group-default">
-                <%= f.input :email, required: false, autofocus: true, class: "form-control", 'aria-required' => "true" %>
+                <%= f.input :email, required: false, autofocus: true, class: "form-control", 'aria-required' => "true", placeholder: "example@example.com" %>
               </div>
             </div>
           </div>
           <div class="row">
             <div class="col-md-12">
               <div class="form-group form-group-default">
-                <%= f.input :password, required: false, class: "form-control", 'aria-required' => "true" %>
+                <%= f.input :password, required: false, class: "form-control", 'aria-required' => "true", placeholder: "Your password here"  %>
               </div>
             </div>
           </div>
           <div class="clearfix"></div>
           <div class="row">
-            <div class="col-sm-4">
+            <div class="col-sm-12">
               <%= f.submit "Log in", class: 'btn btn-primary' %>
-            </div>
-            <div class="col-sm-8 pull-right">
-              <%= render "devise/shared/links" %>
-            </div>
+            </div> 
+              
           </div>
         <% end %>
       </div>
+    </div>
+    <div class="links_white">
+    <%= render "devise/shared/links" %>
     </div>
   </div>
 </div>
