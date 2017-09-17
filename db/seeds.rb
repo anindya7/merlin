@@ -25,11 +25,3 @@ Question.create!([
   {question: "I have difficulty falling asleep", quiz_id: 1, option_set_id: 1, mandatory: nil},
   {question: "I wake up during the night and can't go to sleep", quiz_id: 1, option_set_id: 1, mandatory: true}
 ])
-Option::HABTM_OptionSets.create!([
-  {option_id: 2, option_set_id: 1},
-  {option_id: 1, option_set_id: 1}
-])
-OptionSet::HABTM_Options.create!([
-  {option_id: 2, option_set_id: 1},
-  {option_id: 1, option_set_id: 1}
-])

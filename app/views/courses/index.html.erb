@@ -37,18 +37,18 @@
                 </div>
               <div class="pull-left">
                 <% if course.views.user_views(current_user.id).count + course.quiz_scores.user_taken(current_user.id).count == 0  %>
-                  <%= link_to course_path(course), class: 'btn btn-success btn-lg' do %>
+                  <%= link_to course_video_path(course, course.next_page(current_user)), class: 'btn btn-success btn-lg' do %>
                     Start Course&nbsp;&nbsp;<span class="pull-right"><span class="fa fa-play" aria-hidden="true"></span></span>
                   <% end %>
                 
                 <% elsif course.views.user_views(current_user.id).count + course.quiz_scores.user_taken(current_user.id).count < course.videos.count + course.quizzes.count %>
                   <% if course.next_page(current_user).is_a?(Video) %>
                     <%= link_to course_video_path(course, course.next_page(current_user)), class: 'btn btn-success btn-lg' do %>
-                      Resume Course&nbsp;&nbsp;<span class="pull-right"><span class="fs-14 sl-screen-desktop" aria-hidden="true"></span></span>
+                      Resume Course&nbsp;&nbsp;<span class="pull-right"><span class="fa fa-play" aria-hidden="true"></span></span>
                     <% end %>
                   <% else %>
                     <%= link_to course_quiz_path(course, course.next_page(current_user)), class: 'btn btn-success btn-lg' do %>
-                      Resume Course&nbsp;&nbsp;<span class="pull-right"><span class="fs-14 sl-screen-desktop" aria-hidden="true"></span></span>
+                      Resume Course&nbsp;&nbsp;<span class="pull-right"><span class="fa fa-play" aria-hidden="true"></span></span>
                     <% end %>
                   <% end %>
                 <% end %>
