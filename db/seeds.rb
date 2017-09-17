@@ -21,6 +21,10 @@ Option.create!([
 OptionSet.create!([
   {name: "Yes or No", noop: 2}
 ])
+Question.create!([
+  {question: "I have difficulty falling asleep", quiz_id: 1, option_set_id: 1, mandatory: nil},
+  {question: "I wake up during the night and can't go to sleep", quiz_id: 1, option_set_id: 1, mandatory: true}
+])
 Option::HABTM_OptionSets.create!([
   {option_id: 2, option_set_id: 1},
   {option_id: 1, option_set_id: 1}
@@ -28,18 +32,4 @@ Option::HABTM_OptionSets.create!([
 OptionSet::HABTM_Options.create!([
   {option_id: 2, option_set_id: 1},
   {option_id: 1, option_set_id: 1}
-])
-Question.create!([
-  {question: "I have difficulty falling asleep", quiz_id: 1, option_set_id: 1, mandatory: nil},
-  {question: "I wake up during the night and can't go to sleep", quiz_id: 1, option_set_id: 1, mandatory: true}
-])
-
-QuizScore.create!([
-  {user_id: 1, quiz_id: 1, course_id: 1, taken: false},
-  {user_id: 4, quiz_id: 1, course_id: 1, taken: true}
-])
-View.create!([
-  {user_id: 1, video_id: 1, course_id: 1, played: true},
-  {user_id: 1, video_id: 2, course_id: 1, played: true},
-  {user_id: 4, video_id: 3, course_id: 1, played: true}
 ])
