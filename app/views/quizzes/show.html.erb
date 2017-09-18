@@ -4,7 +4,7 @@
 <div class="row">
   <div class="col-md-4">
     <div class="card social-card share  full-width m-b-10 no-border">
-      <div class="card-header ">
+      <div class="card-header " data-toggle="collapse" data-parent="#accordion" href="#collapseSyllabus" aria-expanded="true" aria-controls="collapseSyllabus">
         <div class="card-title">
           <span class="font-montserrat fs-11 all-caps">
             Syllabus <i class="fa fa-chevron-right"></i>
@@ -13,8 +13,10 @@
         <div class="card-controls">
         </div>
       </div>
-      <div class="card-block">
-        <%= render 'partials/sidenav' %>
+      <div id="collapseSyllabus" class="collapse show" role="tabcard" aria-labelledby="headingSyllabus" aria-expanded="true" style="">
+        <div class="card-block">
+          <%= render 'partials/sidenav' %>
+        </div>
       </div>
     </div>
   </div>
@@ -52,13 +54,14 @@
         <% end %>
       </div>
       <div class="card-footer clearfix">
-        <div class="pull-left">
-          <%= link_to quiz_pdf_path, class: 'btn btn-complete', title: 'Download PDF' do %>
-            Download PDF&nbsp;&nbsp;<i class="fa fa-file-pdf-o"></i>
-          <% end %>
-        </div>
-        <div class="pull-right hint-text">
-          <div class="btn-group">
+        <div class="row">
+          <div class="col-md-5" style="text-align:center">
+            <%= link_to quiz_pdf_path, class: 'btn btn-complete', title: 'Download PDF' do %>
+              Download PDF&nbsp;&nbsp;<i class="fa fa-file-pdf-o"></i>
+            <% end %>
+          </div>
+          <div class="col-md-7" style="text-align:center">
+            <div class="btn-group" style="margin-top:5px;">
             <% unless @next_page.nil? %>
                 <% if @next_page.is_a?(Video) %>
                   <%= link_to course_video_path(@course, @next_page), class: 'btn btn-primary btn-sm w-100' do %>
@@ -102,6 +105,7 @@
                 <% end %>
               <% end %>
             <% end %>
+          </div>
           </div>
         </div>
       </div>
