@@ -29,7 +29,8 @@
 
 
             <div class="card-footer clearfix" style="padding-left:10px;">
-              <% completed = (((course.views.user_views(current_user.id).count.to_f + course.quiz_scores.user_taken(current_user.id).count.to_f)/(course.videos.count.to_f + course.quizzes.count.to_f))*100).to_i %>
+              <% if (course.videos.count.to_f + course.quizzes.count.to_f) > 0 %>
+                <% completed = (((course.views.user_views(current_user.id).count.to_f + course.quiz_scores.user_taken(current_user.id).count.to_f)/(course.videos.count.to_f + course.quizzes.count.to_f))*100).to_i %>
                 <div class="progress" style="height:100%">
                     <% if completed > 75 %>
                         <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="<%= completed %>" aria-valuemin="0" aria-valuemax="100" style="min-width: 2em; width: <%= completed %>%">
@@ -45,24 +46,27 @@
                           </div>
                     <% end %>
                 </div>
+              <% end %>
               <div class="pull-left">
-                <% if course.views.user_views(current_user.id).count + course.quiz_scores.user_taken(current_user.id).count == 0  %>
-                  <%= link_to course_video_path(course, course.next_page(current_user)), class: 'btn btn-success btn-lg' do %>
-                    Start Course&nbsp;&nbsp;<span class="pull-right"><span class="fa fa-play" aria-hidden="true"></span></span>
-                  <% end %>
-                
-                <% elsif course.views.user_views(current_user.id).count + course.quiz_scores.user_taken(current_user.id).count < course.videos.count + course.quizzes.count %>
-                  <% if course.next_page(current_user).is_a?(Video) %>
-                    <%= link_to course_video_path(course, course.next_page(current_user)), class: 'btn btn-success btn-lg' do %>
-                      Resume Course&nbsp;&nbsp;<span class="pull-right"><span class="fa fa-play" aria-hidden="true"></span></span>
+                <% next_page = course.next_page(current_user) %>
+                <% unless next_page.nil? %>
+                  <% if course.views.user_views(current_user.id).count + course.quiz_scores.user_taken(current_user.id).count == 0  %>
+                    <%= link_to course_video_path(course, next_page), class: 'btn btn-success btn-lg' do %>
+                      Start Course&nbsp;&nbsp;<span class="pull-right"><span class="fa fa-play" aria-hidden="true"></span></span>
                     <% end %>
-                  <% else %>
-                    <%= link_to course_quiz_path(course, course.next_page(current_user)), class: 'btn btn-success btn-lg' do %>
-                      Resume Course&nbsp;&nbsp;<span class="pull-right"><span class="fa fa-play" aria-hidden="true"></span></span>
+                  
+                  <% elsif course.views.user_views(current_user.id).count + course.quiz_scores.user_taken(current_user.id).count < course.videos.count + course.quizzes.count %>
+                    <% if next_page.is_a?(Video) %>
+                      <%= link_to course_video_path(course, next_page), class: 'btn btn-success btn-lg' do %>
+                        Resume Course&nbsp;&nbsp;<span class="pull-right"><span class="fa fa-play" aria-hidden="true"></span></span>
+                      <% end %>
+                    <% else %>
+                      <%= link_to course_quiz_path(course, next_page), class: 'btn btn-success btn-lg' do %>
+                        Resume Course&nbsp;&nbsp;<span class="pull-right"><span class="fa fa-play" aria-hidden="true"></span></span>
+                      <% end %>
                     <% end %>
                   <% end %>
                 <% end %>
-              
               </div>
               <div class="pull-right hint-text">
               </div>

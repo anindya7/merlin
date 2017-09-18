@@ -16,43 +16,49 @@
             <div class="col-md-7">
                 <div class="">
                     <br>
-                    <h3>Course completion: <%= completed = (((@views.count.to_f + @quizzes_taken.count.to_f)/(@course.videos.count.to_f + @course.quizzes.count.to_f))*100).to_i %>%</h3>
-                    <div class="progress" style="height:100%">
-                        <% if completed > 75 %>
-                            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="<%= completed %>" aria-valuemin="0" aria-valuemax="100" style="min-width: 2em; width: <%= completed %>%">
-                            <%= completed %>%
-                          </div>
-                        <% elsif completed > 45 %>
-                            <div class="progress-bar progress-bar-complete" role="progressbar" aria-valuenow="<%= completed %>" aria-valuemin="0" aria-valuemax="100" style="min-width: 2em; width: <%= completed %>%">
+                    <% if (@course.videos.count.to_f + @course.quizzes.count.to_f) > 0 %>
+                        <% completed = (((@views.count.to_f + @quizzes_taken.count.to_f)/(@course.videos.count.to_f + @course.quizzes.count.to_f))*100).to_i %>
+                        <h3>Course completion: <%= completed %>%</h3>
+                        <div class="progress" style="height:100%">
+                            <% if completed > 75 %>
+                                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="<%= completed %>" aria-valuemin="0" aria-valuemax="100" style="min-width: 2em; width: <%= completed %>%">
                                 <%= completed %>%
                               </div>
-                        <% else %>
-                            <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="<%= completed %>" aria-valuemin="0" aria-valuemax="100" style="min-width: 2em; width: <%= completed %>%">
-                                <%= completed %>%
-                              </div>
-                        <% end %>
-                    </div>
+                            <% elsif completed > 45 %>
+                                <div class="progress-bar progress-bar-complete" role="progressbar" aria-valuenow="<%= completed %>" aria-valuemin="0" aria-valuemax="100" style="min-width: 2em; width: <%= completed %>%">
+                                    <%= completed %>%
+                                  </div>
+                            <% else %>
+                                <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="<%= completed %>" aria-valuemin="0" aria-valuemax="100" style="min-width: 2em; width: <%= completed %>%">
+                                    <%= completed %>%
+                                  </div>
+                            <% end %>
+                        </div>
+                    <% end %>
                 </div>
             </div>
             <div class="col-md-5 text-center" style="margin-top: 7px; padding: 5px;">
-
-                <% if @views.count + @quizzes_taken.count == 0 %>
-                    <%= link_to "Start Course", course_video_path(@course, @videos.ordered_in_week(1).first), class: 'btn btn-success btn-lg' %>
-                <% elsif @views.count + @quizzes_taken.count == @videos.count + @quizzes.count %>
-                    <%= link_to course_video_path(@course, @videos.ordered_in_week(1).first), class: 'btn btn-success btn-lg' do %>
-                        Course Completed&nbsp;<span class="pull-right"><span class="fs-14 fa fa-check" aria-hidden="true"></span></span>
-                    <% end %>
-                <% else %>
-                    <% if @next_page.is_a?(Video) %>
-                        <%= link_to course_video_path(@course, @next_page), class: 'btn btn-success btn-lg' do %>
-                            <strong>Resume Course&nbsp;&nbsp;<span class="pull-right"><span class="fs-14 sl-screen-desktop" aria-hidden="true"></span></span></strong>
+                <% unless @videos.count == 0 %>
+                    <% if @views.count + @quizzes_taken.count == 0 %>
+                        <%= link_to "Start Course", course_video_path(@course, @videos.ordered_in_week(1).first), class: 'btn btn-success btn-lg' %>
+                    <% elsif @views.count + @quizzes_taken.count == @videos.count + @quizzes.count %>
+                        <%= link_to course_video_path(@course, @videos.ordered_in_week(1).first), class: 'btn btn-success btn-lg' do %>
+                            Course Completed&nbsp;<span class="pull-right"><span class="fs-14 fa fa-check" aria-hidden="true"></span></span>
                         <% end %>
-                        <h4 class="text-primary">Next Video: <strong>Week <%= @next_page.week %> - <%= @next_page.name %></strong></h4>
-                    <% elsif @next_page.is_a?(Quiz) %>
-                        <%= link_to course_quiz_path(@course, @next_page), class: 'btn btn-success btn-lg' do %>
-                            <strong>Resume Course&nbsp;&nbsp;<span class="pull-right"><span class="fs-14 sl-screen-desktop" aria-hidden="true"></span></span></strong>
+                    <% else %>
+                        <% unless @next_page.nil? %>
+                            <% if @next_page.is_a?(Video) %>
+                                <%= link_to course_video_path(@course, @next_page), class: 'btn btn-success btn-lg' do %>
+                                    <strong>Resume Course&nbsp;&nbsp;<span class="pull-right"><span class="fs-14 sl-screen-desktop" aria-hidden="true"></span></span></strong>
+                                <% end %>
+                                <h4 class="text-primary">Next Video: <strong>Week <%= @next_page.week %> - <%= @next_page.name %></strong></h4>
+                            <% elsif @next_page.is_a?(Quiz) %>
+                                <%= link_to course_quiz_path(@course, @next_page), class: 'btn btn-success btn-lg' do %>
+                                    <strong>Resume Course&nbsp;&nbsp;<span class="pull-right"><span class="fs-14 sl-screen-desktop" aria-hidden="true"></span></span></strong>
+                                <% end %>
+                                <h4 class="text-primary">Next Quiz: <strong>Week <%= @next_page.week %> - <%= @next_page.name %></strong> </h4>
+                            <% end %>
                         <% end %>
-                        <h4 class="text-primary">Next Quiz: <strong>Week <%= @next_page.week %> - <%= @next_page.name %></strong> </h4>
                     <% end %>
                 <% end %>
             </div>
