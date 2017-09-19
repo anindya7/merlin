@@ -31,13 +31,13 @@
       <div class="card-block" style="padding:10px;">
         <% unless @total.present? %> 
           <div class="card" style="padding:7px; margin-bottom:0px;">
-            <%= simple_form_for :quiz_score, :url => '/quiz/submit', html: {class: 'form_horizontal'} do |f| %>
+            <%= simple_form_for :quiz_score, :url => '/quiz/submit', html: {class: 'form_horizontal', novalidate: false} do |f| %>
               <div class="form-inputs">
                 <% @quiz.questions.each_with_index do |question,index| %>
                   <h5><%= "#{index+1}. #{question.question}" %></h5>
                   <% question.option_set.options.all.each do |option| %>
                     <div class="">
-                      &nbsp;&nbsp;<%= f.radio_button "questions[#{index}]", option.value, required: true %>
+                      &nbsp;&nbsp;<%= f.radio_button "questions[#{index}]", option.value, required: question.mandatory ? true : false %>
                       <%= f.label "questions[#{index}]", option.text %>
                     </div>
                   <% end %>

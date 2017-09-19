@@ -53,7 +53,7 @@ class QuizzesController < ApplicationController
       redirect_to request.referrer
     else
       @quiz = Quiz.find(params[:quiz_score][:quiz_id])
-      if scores.values.count < @quiz.questions.count
+      if scores.values.count < @quiz.questions.where(mandatory: true).count
         flash[:alert] = "Please answer all questions and submit quiz."
         redirect_to request.referrer
       else

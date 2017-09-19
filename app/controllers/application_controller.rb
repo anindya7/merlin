@@ -5,7 +5,8 @@ class ApplicationController < ActionController::Base
 
   def layout_by_resource
     if (devise_controller? && resource_name == :user && action_name != 'edit') || 
-      (controller_name.eql?('home') && action_name == 'refer')
+      (controller_name.eql?('home') && action_name == 'refer') || 
+      (controller_path.eql?('devise/passwords') && resource_name == :user)
       "homepages"
     else
       "application"
