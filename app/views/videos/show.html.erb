@@ -170,30 +170,6 @@
   });
   </script>
 <script>
-      <% unless has_incomplete_view(current_user.id, @video.id) || has_viewed(current_user.id, @video.id) %>
-        jwplayer().on('play', function(e) {
-          console.log("started");
-           $.ajax({
-            type: 'POST',
-            contentType: "application/json; charset=utf-8",
-            url: "<% ENV['DEFAULT_HOST'] %>/views",
-            headers: { },
-            data : JSON.stringify({
-              user_id: <%= current_user.id %>,
-              video_id: <%= @video.id %>,
-              course_id: <%= @course.id %>,
-              played: false
-            }),
-            dataType: "json",
-            success: function (result) {
-              console.log("success");
-            },
-            error: function (){
-              console.log("something wrong!");
-            }
-           });
-        });
-      <% end %>
 
       <% unless has_viewed(current_user.id, @video.id) %>
         jwplayer().on('complete', function(e) {
@@ -204,6 +180,7 @@
             url: "<% ENV['DEFAULT_HOST'] %>/views",
             headers: { },
             data : JSON.stringify({
+              authenticity_token: "<%= form_authenticity_token %>",
               user_id: <%= current_user.id %>,
               video_id: <%= @video.id %>,
               course_id: <%= @course.id %>,
