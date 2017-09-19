@@ -36,7 +36,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
           respond_with resource
         end
       else
-        flash[:alert] = "Error while signing up"
+        flash[:alert] = "Error occured while making payment. Please try again."
         redirect_to new_user_registration_path
       end
     else

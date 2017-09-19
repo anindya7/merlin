@@ -17,6 +17,7 @@ gem 'rails_admin', '~> 1.2'
 gem 'tether-rails'
 gem 'figaro'
 gem 'seed_dump'
+gem 'rollbar'
 # Payment gateways
 gem 'razorpay'
 gem 'ccavenue'

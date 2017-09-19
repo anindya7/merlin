@@ -13,9 +13,13 @@ class HomeController < ApplicationController
     referral = params[:refer]
     ref = Referral.new(name: referral[:name], refer_name: referral[:refer_name], refer_email: referral[:refer_email])
     ref.email = current_user.email
-    ref.save
-    ReferMailer.invite_mail(referral[:name], current_user.email, referral[:refer_name], referral[:refer_email]).deliver
-    flash[:notice] = "Thanks for referring your friend!"
-    redirect_to courses_path
+    if ref.save
+      ReferMailer.invite_mail(referral[:name], current_user.email, referral[:refer_name], referral[:refer_email]).deliver
+      flash[:notice] = "Thanks for referring your friend!"
+      redirect_to courses_path
+    else
+      flash[:alert] = "Error occured while submiting form"
+      redirect_to request.referrer
+    end
   end
 end
