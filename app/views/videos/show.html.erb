@@ -1,6 +1,12 @@
 <% content_for :heading do %>
   <%= @course.name %>
 <% end %>
+<% content_for :styles do %>
+  <link href="//vjs.zencdn.net/5.19/video-js.min.css" rel="stylesheet">
+  <script src="//vjs.zencdn.net/5.19/video.min.js"></script>
+  <!-- If you'd like to support IE8 -->
+  <script src="http://vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"></script>
+<% end %>
 <div class="row">
   <div class="col-md-4">
     <div class="card social-card share  full-width m-b-10 no-border">
@@ -29,7 +35,13 @@
         <div class="clearfix"></div>
       </div>
       <div class="card-block" style="padding:10px;">
-        <script src="<%= @video.url %>"></script>
+        <video id="my-video" class="video-js vjs-default-skin vjs-big-play-centered" controls preload="auto" width="640" height="480" data-setup="{}">
+          <source src="<%= @video.url %>" type='video/mp4'>
+          <p class="vjs-no-js">
+            To view this video please enable JavaScript, and consider upgrading to a web browser that
+            <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+          </p>
+        </video>
       </div>
       <div class="card-footer clearfix">
         
@@ -170,30 +182,29 @@
   });
   </script>
 <script>
-
-      <% unless has_viewed(current_user.id, @video.id) %>
-        jwplayer().on('complete', function(e) {
-          console.log("complete");
-           $.ajax({
-            type: 'POST',
-            contentType: "application/json; charset=utf-8",
-            url: "<% ENV['DEFAULT_HOST'] %>/views",
-            headers: { },
-            data : JSON.stringify({
-              authenticity_token: "<%= form_authenticity_token %>",
-              user_id: <%= current_user.id %>,
-              video_id: <%= @video.id %>,
-              course_id: <%= @course.id %>,
-              played: true
-            }),
-            dataType: "json",
-            success: function (result) {
-              console.log("success");
-            },
-            error: function (){
-              console.log("something wrong!");
-            }
-           });
-        });
-      <% end %>
+      // <% unless has_viewed(current_user.id, @video.id) %>
+      //   jwplayer().on('complete', function(e) {
+      //     console.log("complete");
+      //      $.ajax({
+      //       type: 'POST',
+      //       contentType: "application/json; charset=utf-8",
+      //       url: "<% ENV['DEFAULT_HOST'] %>/views",
+      //       headers: { },
+      //       data : JSON.stringify({
+      //         authenticity_token: "<%= form_authenticity_token %>",
+      //         user_id: <%= current_user.id %>,
+      //         video_id: <%= @video.id %>,
+      //         course_id: <%= @course.id %>,
+      //         played: true
+      //       }),
+      //       dataType: "json",
+      //       success: function (result) {
+      //         console.log("success");
+      //       },
+      //       error: function (){
+      //         console.log("something wrong!");
+      //       }
+      //      });
+      //   });
+      // <% end %>
     </script>
