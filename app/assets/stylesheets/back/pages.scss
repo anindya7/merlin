@@ -152,7 +152,7 @@ body.menu-pin .overlay .overlay-brand {
   -webkit-animation: none;
   animation: none;
   top: 73px;
-  background: url('../img/progress/progress-circle-success.svg') no-repeat top left;
+  background: url(image_path('img/progress/progress-circle-success.svg')) no-repeat top left;
   background-size: 100% auto;
   margin: 0 auto;
   border-width: 0;
@@ -5206,7 +5206,7 @@ body > .pgn-wrapper {
   background-image: url('../img/progress/progress-circle-primary.svg');
 }
 .progress-circle-indeterminate.progress-circle-success {
-  background-image: url('../img/progress/progress-circle-success.svg');
+  background-image: url(image_path('img/progress/progress-circle-success.svg'));
 }
 .progress-circle-indeterminate.progress-circle-complete {
   background-image: url('../img/progress/progress-circle-complete.svg');
