@@ -17,8 +17,8 @@ class VideosController < ApplicationController
     video = Video.find(params[:id])
     url = video.pdf_url.sub('http://', '')
     url = url.sub('https://', '')
-    data = open("http://#{video.pdf_url}") 
-    send_data data.read, filename: "w1v1.pdf", type: "application/pdf", disposition: 'inline', stream: 'true', buffer_size: '4096'
+    data = open("http://#{url}") 
+    send_data data.read, filename: "#{video.name}.pdf", type: "application/pdf", disposition: 'inline', stream: 'true', buffer_size: '4096'
   end
 
   def download_audio
