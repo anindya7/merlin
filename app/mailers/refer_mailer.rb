@@ -4,7 +4,7 @@ class ReferMailer < ApplicationMailer
     @user = user
     mail :subject => "CalmIndia - Thank you for joining us!",
       :to => user.email,
-      :from => "Calm India <support@calmindia.com>",
+      :from => "Calm India <support@calmIndia.com>",
       :template_name => 'welcome'
   end
 
