@@ -14,9 +14,10 @@ class VideosController < ApplicationController
   end
 
   def download_pdf
-    # download = open('https://upload.wikimedia.org/wikipedia/en/3/33/Silicon_valley_title.png')
-    # IO.copy_stream(download, '~/image.png')
-    data = open("http://www.pdf995.com/samples/pdf.pdf") 
+    video = Video.find(params[:id])
+    url = video.pdf_url.sub('http://', '')
+    url = url.sub('https://', '')
+    data = open("http://#{video.pdf_url}") 
     send_data data.read, filename: "w1v1.pdf", type: "application/pdf", disposition: 'inline', stream: 'true', buffer_size: '4096'
   end
 

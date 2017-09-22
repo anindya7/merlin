@@ -20,7 +20,7 @@ Rails.application.routes.draw do
   post '/quiz/skip' => 'quizzes#skip'
   post '/quiz/submit' => 'quizzes#submit'
   get '/quiz/pdf' => 'quizzes#download_pdf'
-  get '/video/pdf' => 'videos#download_pdf'
+  get '/video/:id/pdf' => 'videos#download_pdf', as: 'video_pdf'
   get '/quiz/audio' => 'quizzes#download_audio'
   get '/video/audio' => 'videos#download_audio'
   get '/refer' => 'home#refer'

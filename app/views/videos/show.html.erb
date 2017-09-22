@@ -52,7 +52,7 @@
         
         <div class="row hidden-xs">
           <div class="col-sm-5">
-            <%= link_to video_pdf_path, class: 'btn btn-complete', title: 'Download PDF' do %>
+            <%= link_to video_pdf_path(id: @video.id), class: 'btn btn-complete', title: 'Download PDF' do %>
               Download PDF&nbsp;&nbsp;<i class="fa fa-file-pdf-o"></i>
             <% end %>
           </div>
@@ -111,7 +111,7 @@
         </div>
         <div class="row visible-xs">
           <div class="col-sm-12" style="text-align:center">
-            <%= link_to video_pdf_path, class: 'btn btn-complete', title: 'Download PDF', style: 'margin-top:5px;' do %>
+            <%= link_to video_pdf_path(id: @video.id), class: 'btn btn-complete', title: 'Download PDF', style: 'margin-top:5px;' do %>
               Download PDF&nbsp;&nbsp;<i class="fa fa-file-pdf-o"></i>
             <% end %>
           </div>
