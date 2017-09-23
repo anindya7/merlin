@@ -52,7 +52,7 @@
         
         <div class="row hidden-xs">
           <div class="col-sm-5">
-            <%= link_to video_pdf_path(id: @video.id), class: 'btn btn-complete', title: 'Download PDF' do %>
+            <%= link_to video_pdf_path(id: @video.id), class: 'btn btn-complete', title: 'Download PDF', download: '' do %>
               Download PDF&nbsp;&nbsp;<i class="fa fa-file-pdf-o"></i>
             <% end %>
           </div>
