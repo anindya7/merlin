@@ -42,9 +42,9 @@ Rails.application.configure do
   #   enable_starttls_auto: true
   # }
   config.action_mailer.smtp_settings = {
-    user_name: 'SMTP_Injection',
-    password: '7f1c75d3122a093c6bb952809994bced8ff05a8b',
-    address: 'smtp.sparkpostmail.com',
+    user_name: ENV['SENDGRID_USER'],
+    password: ENV['SENDGRID_KEY'],
+    address: 'smtp.sendgrid.net',
     port: 587,
     enable_starttls_auto: true,
     format: :html,
