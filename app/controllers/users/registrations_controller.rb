@@ -15,7 +15,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
     build_resource(sign_up_params)
     resource.razorpay_payment_id = params[:razorpay_payment_id]
     if resource.valid?
-      response = Razorpay::Payment.fetch(params[:razorpay_payment_id]).capture({amount:100})
+      response = Razorpay::Payment.fetch(params[:razorpay_payment_id]).capture({amount:29900})
       unless response.nil?
         resource.save
         yield resource if block_given?
