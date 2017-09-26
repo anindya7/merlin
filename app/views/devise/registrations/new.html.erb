@@ -12,9 +12,12 @@
           }else if(!(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/.test(email))){
             $("#pwd-error").html("");
             $("#email-error").html("<div class='text-danger' style='margin: 0px'>Invalid email.</div>");
-          }else if(!pwd || pwd.length < 6 || pwd.length > 20){
+          }else if(!pwd || pwd.length < 6 ){
             $("#email-error").html("");
             $("#pwd-error").html("<div class='text-danger' style='margin: 0px'>Enter a minimum of 6 characters.</div>");
+          }else if(pwd.length > 20){
+            $("#email-error").html("");
+            $("#pwd-error").html("<div class='text-danger' style='margin: 0px'>Enter a maximum of 20 characters.</div>");
           }
           else {
             $.ajax({
