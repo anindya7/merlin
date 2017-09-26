@@ -4,7 +4,7 @@ class QuizThreshold < ApplicationRecord
   belongs_to :quiz
 
   def self.find_threshold(value)
-  	where('max >= ?', value).where('min <= ?', value).first.name
+  	where('max >= ?', value).where('min <= ?', value)
   end
 
 end

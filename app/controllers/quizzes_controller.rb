@@ -70,7 +70,7 @@ class QuizzesController < ApplicationController
           end
         end
         @total = (@total * 100) / @quiz.max_score
-        @threshold = @quiz.find_threshold(@total)
+        @threshold = @quiz.find_threshold(@total) || "#{@total}%"
         unless QuizScore.where(user_id: current_user.id, quiz_id: @quiz.id).any?
           QuizScore.create(
             user_id: current_user.id, 

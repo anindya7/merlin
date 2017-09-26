@@ -35,7 +35,13 @@ class Quiz < ApplicationRecord
   end
 
   def find_threshold(value)
-    self.quiz_thresholds.find_threshold(value)
+    threshs = self.quiz_thresholds.find_threshold(value)
+    if threshs.any?
+      thresh = threshs.first.name
+    else
+      thresh = nil
+    end
+    thresh
   end
 
 end
