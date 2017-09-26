@@ -25,6 +25,8 @@ Rails.application.routes.draw do
   get '/video/audio' => 'videos#download_audio'
   get '/refer' => 'home#refer'
   post '/refer' => 'home#submit_refer'
+  post '/checkuser', to: 'home#checkuser'
+
   # root "home#index"
   # root :to => 'users/registrations#new'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html

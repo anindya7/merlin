@@ -22,4 +22,11 @@ class HomeController < ApplicationController
       redirect_to request.referrer
     end
   end
+
+  def checkuser
+    @user = User.where(email: params[:email])
+    respond_to do |format|
+      format.json {render :json => {email_exists: @user.any?}}
+    end
+  end
 end
