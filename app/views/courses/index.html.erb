@@ -97,17 +97,44 @@
             </div>
             <div class="col-md-9" style="padding-left:10px;">
               <h4 style="width:100%;padding-left:10px; padding-right:10px;padding-bottom:0px;margin-bottom:0px;">
-              <%= link_to course_path(course) do %>
-                <strong><%= course.name %></strong>
-                <% if course.videos.count + course.quizzes.count == course.views.user_views(current_user).count + course.quiz_scores.user_taken(current_user.id).count %>
-                  <span class="pull-right text-success"><span class="fs-14 fa fa-check" aria-hidden="true"></span></span>
-                <% end %>
-              <% end %>
-              <p style="opacity:0.7"><%= course.description %></p>
-            </h4>
-            <div style="padding-left:10px;padding-top:0px;">
-              <a href="<%= course.audio_book_url %>" class="btn btn-success btn-lg" download>Download Audio Book</a>
+                <strong><%= course.audio_book_title %></strong>
+              <p style="opacity:0.7"><%= course.audio_book_description %></p>
+              </h4>
+              <div style="padding-left:10px;padding-top:0px;">
+                <a href="<%= course.audio_book_url %>" class="btn btn-success btn-lg" download>Download Audio Book</a>
+              </div>
             </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<div class="card social-card share  full-width m-b-10 no-border" data-social="item2">
+  <div class="card-header ">
+    <h5 class="text-complete pull-left fs-12">Flash Cards&nbsp;<i class="fa fa-circle text-complete fs-11"></i></h5>
+    <div class="clearfix"></div>
+  </div>
+  <div class="card-block">
+    <br>
+    <% @courses.each do |course| %>
+      <div class="card social-card share  full-width m-b-10" data-social="item2">
+        <div class="card-description" style="">
+          <div class="row">
+            <div class="col-md-3" style="text-align:center;padding-left:5px; padding-right:5px;">
+              <div class="bg-primary" style="padding-top:20px;padding-bottom:20px;">
+                <span class="fa fa-window-restore fa-5x" aria-hidden="true" style="color:white"></span>
+              </div>
+            </div>
+            <div class="col-md-9" style="padding-left:10px;">
+              <h4 style="width:100%;padding-left:10px; padding-right:10px;padding-bottom:0px;margin-bottom:0px;">
+                <strong><%= course.slide_deck_title %></strong>
+                <p style="opacity:0.7"><%= course.slide_deck_description %></p>
+              </h4>
+              <div style="padding-left:10px;padding-top:0px;">
+                <a href="<%= course.slide_deck_url %>" class="btn btn-success btn-lg" download>Download Flash Cards</a>
+              </div>
             </div>
           </div>
         </div>
