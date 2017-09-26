@@ -50,7 +50,8 @@
             <% end %>
           </div>   
         <% else %>
-          <h3 class="text-primary">&nbsp;&nbsp;Your Quiz Score: <%= @total %></h3>
+          <h3 class="text-primary">&nbsp;&nbsp;Your Quiz Score: <strong><%= @total %>%</strong></h3>
+          <h3 class="text-complete">&nbsp;&nbsp;<%= @quiz.result_text %>: <strong><%= @threshold %></strong></h3>
         <% end %>
       </div>
       <div class="card-footer clearfix">

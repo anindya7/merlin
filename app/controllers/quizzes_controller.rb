@@ -49,12 +49,12 @@ class QuizzesController < ApplicationController
   def submit
     scores = params[:quiz_score][:questions]
     if scores.nil?
-      flash[:alert] = "Please answer all questions and submit quiz."
+      flash[:alert] = "Please answer the following questions and submit quiz."
       redirect_to request.referrer
     else
       @quiz = Quiz.find(params[:quiz_score][:quiz_id])
       if scores.values.count < @quiz.questions.where(mandatory: true).count
-        flash[:alert] = "Please answer all questions and submit quiz."
+        flash[:alert] = "Please answer all mandatory questions and submit quiz."
         redirect_to request.referrer
       else
         @course = Course.find(params[:quiz_score][:course_id])
@@ -69,6 +69,8 @@ class QuizzesController < ApplicationController
             @total += value.to_i
           end
         end
+        @total = (@total * 100) / @quiz.max_score
+        @threshold = @quiz.find_threshold(@total)
         unless QuizScore.where(user_id: current_user.id, quiz_id: @quiz.id).any?
           QuizScore.create(
             user_id: current_user.id, 

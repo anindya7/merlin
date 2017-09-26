@@ -10,10 +10,29 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170922091042) do
+ActiveRecord::Schema.define(version: 20170926101644) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "admins", force: :cascade do |t|
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.integer "sign_in_count", default: 0, null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.inet "current_sign_in_ip"
+    t.inet "last_sign_in_ip"
+    t.integer "failed_attempts", default: 0, null: false
+    t.datetime "locked_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["email"], name: "index_admins_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true
+  end
 
   create_table "courses", force: :cascade do |t|
     t.string "name"
@@ -66,6 +85,16 @@ ActiveRecord::Schema.define(version: 20170922091042) do
     t.index ["user_id"], name: "index_quiz_scores_on_user_id"
   end
 
+  create_table "quiz_thresholds", force: :cascade do |t|
+    t.string "name"
+    t.bigint "quiz_id"
+    t.integer "min"
+    t.integer "max"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["quiz_id"], name: "index_quiz_thresholds_on_quiz_id"
+  end
+
   create_table "quizzes", force: :cascade do |t|
     t.string "name"
     t.bigint "course_id"
@@ -73,6 +102,7 @@ ActiveRecord::Schema.define(version: 20170922091042) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "order_in_week"
+    t.string "result_text"
     t.index ["course_id"], name: "index_quizzes_on_course_id"
   end
 
@@ -138,6 +168,7 @@ ActiveRecord::Schema.define(version: 20170922091042) do
   add_foreign_key "quiz_scores", "courses"
   add_foreign_key "quiz_scores", "quizzes"
   add_foreign_key "quiz_scores", "users"
+  add_foreign_key "quiz_thresholds", "quizzes"
   add_foreign_key "quizzes", "courses"
   add_foreign_key "videos", "courses"
   add_foreign_key "views", "courses"

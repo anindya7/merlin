@@ -1,6 +1,7 @@
 class Quiz < ApplicationRecord
   has_many :questions
   belongs_to :course
+  has_many :quiz_thresholds, dependent: :destroy
   has_many :quiz_scores, class_name: "QuizScore", dependent: :destroy
 
   validates_presence_of :name, :course_id, :week, :order_in_week
@@ -22,6 +23,19 @@ class Quiz < ApplicationRecord
       end
     end
     @next_page
+  end
+
+  def max_score
+    max = 0
+    questions = self.questions
+    questions.each do |q|
+      max += q.max_score
+    end
+    max
+  end
+
+  def find_threshold(value)
+    self.quiz_thresholds.find_threshold(value)
   end
 
 end

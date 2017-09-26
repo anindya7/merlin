@@ -4,4 +4,8 @@ class Question < ApplicationRecord
 
   validates_presence_of :question, :option_set_id, :quiz_id
   validates_uniqueness_of :question, scope: [:option_set_id, :quiz_id]
+
+  def max_score
+  	self.option_set.options.maximum(:value)
+  end
 end
