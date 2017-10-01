@@ -1,2 +1,2 @@
 web: bundle exec puma -t 8:32 -w 3 -p ${PORT:-3000}
-worker: bundle exec sidekiq -q default -q mailers
+worker: bundle exec sidekiq -e production -c 3 -q default -q mailers
