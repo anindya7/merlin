@@ -14,7 +14,7 @@ class HomeController < ApplicationController
     ref = Referral.new(name: referral[:name], refer_name: referral[:refer_name], refer_email: referral[:refer_email])
     ref.email = current_user.email
     if ref.save
-      ReferMailer.invite_mail(referral[:name], current_user.email, referral[:refer_name], referral[:refer_email]).deliver
+      ReferMailer.invite_mail(referral[:name], current_user.email, referral[:refer_name], referral[:refer_email]).deliver_later
       flash[:notice] = "Thanks for referring your friend!"
       redirect_to courses_path
     else

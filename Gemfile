@@ -18,6 +18,7 @@ gem 'tether-rails'
 gem 'figaro'
 gem 'seed_dump'
 gem 'rollbar'
+gem 'sidekiq'
 # Payment gateways
 gem 'razorpay'
 gem 'ccavenue'
