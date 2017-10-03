@@ -33,3 +33,12 @@
 {
 	color:white!important;
 }
+
+.razorpay-payment-button-2 {
+  background-color: #5388ea !important;
+  border-color: #5388ea !important;
+  color: #fff;
+  padding:5px;
+  border-radius: 5px;
+  cursor:pointer;
+}

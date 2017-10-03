@@ -1,5 +1,5 @@
 User.create!([
-  {email: "mercurial@calmindia.com", password: "groupsite6197!", razorpay_payment_id: "pay_8bzZg6IKSVK2Jx", admin: true},
+  {email: "mercurial@calmindia.com", password: "groupsite6197!", payment_id: "pay_8bzZg6IKSVK2Jx", admin: true},
 ])
 Course.create!([
   {name: "Build Mental Resilience", description: "Content for first 2 weeks is out now! Content for the last 2 weeks will be released October 7th.", total_weeks: 4, audio_book_url: 'https://s3.ap-south-1.amazonaws.com/calmindia/Calm+India+Audio.zip', slide_deck_url: 'https://s3.ap-south-1.amazonaws.com/calmindia/Flash_Cards_Calmindia.pdf', slide_deck_title: 'Science Of The Mind', slide_deck_description: 'Handy deck of flash cards for a quick reference anytime anywhere.', audio_book_title: 'Re-train Your Mind', audio_book_description: 'Narrated version of the content broken down into 10 minute chunks.'}

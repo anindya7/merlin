@@ -1,12 +1,12 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
-
   layout :layout_by_resource
 
   def layout_by_resource
     if (devise_controller? && resource_name == :user && action_name != 'edit') || 
       (controller_name.eql?('home') && action_name == 'refer') || 
-      (controller_path.eql?('devise/passwords') && resource_name == :user)
+      (controller_path.eql?('devise/passwords') && resource_name == :user) ||
+      (controller_name.eql?('paytm'))
       "homepages"
     else
       "application"

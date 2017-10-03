@@ -1,0 +1,30 @@
+<div>
+  	<% if @paytmparams["STATUS"] == "TXN_SUCCESS" %>
+  		<h2 class="text-white">Transaction Successful</h2>
+  		<h1 class="text-white">Signing Up</h1>
+		<div class="progress-circle-indeterminate m-t-45" style="display: block;"></div>
+	  	<form method="post" action="/users" name="f1" id="user_form">
+		  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+		  <input type="hidden" name="user[email]" id="email">
+		  <input type="hidden" name="user[password]" id="password">
+		  <input type="hidden" name="payment_id" value="<%= @paytmparams['TXNID'] %>">
+		</form>
+		<script>
+		    $(document).ready(function(){
+		    	var email = localStorage.getItem("paytm_email");
+		    	var pwd= localStorage.getItem("paytm_pwd");
+		    	console.log(email);
+		    	console.log(pwd);
+		    	$("#email").val(email);
+		    	$("#password").val(pwd);
+		    	localStorage.removeItem("paytm_email");
+		    	localStorage.removeItem("paytm_pwd");
+		    	// $('#user_form').submit();
+		    });
+		</script>
+	<% else %>
+		<h1 class="white"><%= @paytmparams['RESPMSG'] %></h1>
+		<br>
+		<%= link_to "Try Again", new_user_registration_path, class: 'btn btn-primary' %>
+	<% end %>
+</div>

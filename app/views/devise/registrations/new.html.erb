@@ -45,6 +45,54 @@
              });
           }
        });
+
+        $(".razorpay-payment-button-2").click( function(e) {
+          e.preventDefault();
+          var email = $("#user_email").val();
+          var pwd = $("#user_password").val();
+
+          if(!email){
+            $("#pwd-error").html("");
+            $("#email-error").html("<div class='text-danger' style='margin: 0px'>Enter a valid email.</div>");
+          }else if(!(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/.test(email))){
+            $("#pwd-error").html("");
+            $("#email-error").html("<div class='text-danger' style='margin: 0px'>Invalid email.</div>");
+          }else if(!pwd || pwd.length < 6 ){
+            $("#email-error").html("");
+            $("#pwd-error").html("<div class='text-danger' style='margin: 0px'>Enter a minimum of 6 characters.</div>");
+          }else if(pwd.length > 20){
+            $("#email-error").html("");
+            $("#pwd-error").html("<div class='text-danger' style='margin: 0px'>Enter a maximum of 20 characters.</div>");
+          }
+          else {
+            $.ajax({
+              type: 'POST',
+              contentType: "application/json; charset=utf-8",
+              url: "<% ENV['DEFAULT_HOST'] %>/checkuser?email="+$("#user_email").val(),
+              headers: { },
+              data : JSON.stringify({
+                authenticity_token: "<%= form_authenticity_token %>",
+              }),
+              dataType: "json",
+              success: function (result) {
+                if(result['email_exists'] == false){
+                  $("#pwd-error").html("");
+                  $("#email-error").html("");
+                  localStorage.setItem("paytm_email", email);
+                  localStorage.setItem("paytm_pwd", pwd);
+                  // console.log(localStorage.getItem("paytm_pwd"));
+                  $(".razorpay-payment-button-2").unbind('click').click();
+                }else{
+                  $("#pwd-error").html("");
+                  $("#email-error").html("<div class='text-danger' style='margin: 0px'>Email has already been taken.</div>");
+                }
+              },
+              error: function (){
+                console.log("something wrong!");
+              }
+             });
+          }
+       });
     });
   </script>
 <% end %>
@@ -76,8 +124,8 @@
             <script
                 src="https://checkout.razorpay.com/v1/checkout.js"
                 data-key="<%= ENV['RAZORPAY_ID'] %>"
-                data-amount="29900"
-                data-buttontext="Sign Up with RazorPay (₹299)"
+                data-amount="39900"
+                data-buttontext="Sign Up with RazorPay (₹399)"
                 data-name="Calm India"
                 data-description="A 4 WEEK COURSE ON BUILDING MENTAL RESILIENCE, TAILORED FOR INDIA."
                 data-image=""
@@ -87,18 +135,12 @@
             ></script>
             <input type="hidden" value="Hidden Element" name="hidden">
           </form>
-          <!-- <strong>OR</strong>
-          <div class="row">
-            <div class="col-md-12">
-              <div class="">
-                <button class="razorpay-payment-button" style="padding-left:10px; padding-right:10px; ">Sign Up with PayTM (₹299)</button>
-              </div>
-              <br/>
-            </div>
-          </div> -->
         <% end %>
-        <br>
-        
+        <!-- <strong>OR</strong>
+        <br> -->
+        <%#= form_tag paytm_payment_path, method: :post, remote: false, :style => "" do %>
+            <!-- <button class="razorpay-payment-button-2">Sign Up with PayTM (₹399)</button> -->
+        <%# end %>
       </div>
     </div>
     <%= render "devise/shared/links" %>

@@ -26,7 +26,8 @@ Rails.application.routes.draw do
   get '/refer' => 'home#refer'
   post '/refer' => 'home#submit_refer'
   post '/checkuser', to: 'home#checkuser'
-
+  match '/paytm_payment' => 'paytm#start_payment', via: [:post], :as => :paytm_payment
+  match '/confirm_payment' => 'paytm#verify_payment', via: [:post]
   # root "home#index"
   # root :to => 'users/registrations#new'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html

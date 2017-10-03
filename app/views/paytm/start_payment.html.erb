@@ -1,0 +1,17 @@
+
+<center>
+  <h2 class="text-white">Redirecting to Paytm </h2><br/>
+  <h1 class="text-white">Please do not refresh this page...</h1>
+</center>
+<form method="post" action="<%= @paytm_keys['payment_url'] %>" name="f1">
+  <input type="hidden" name="authenticity_token" value=""<%= form_authenticity_token %>"">
+  <% keys = @paramList.keys %>
+  <% keys.each do |k| %>
+    <input type="hidden" name="<%= k %>" value="<%= @paramList[k] %>">
+  <% end %>
+  <% user_details = @user_details.keys %>
+  <% user_details.each do |k| %>
+  <% end %>
+  <input type="hidden" name="CHECKSUMHASH" value="<%= @checksum_hash %>">
+</form>
+<script type="text/javascript">document.f1.submit();</script>

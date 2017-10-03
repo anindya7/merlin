@@ -13,9 +13,17 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def create
     # render json: params
     build_resource(sign_up_params)
-    resource.razorpay_payment_id = params[:razorpay_payment_id]
+    # if params[:razorpay_payment_id].present?
+    resource.payment_id = params[:razorpay_payment_id] 
+    # elsif params[:payment_id].present?
+      # resource.payment_id = params[:payment_id] 
+    # end
     if resource.valid?
-      response = Razorpay::Payment.fetch(params[:razorpay_payment_id]).capture({amount:29900})
+      # if params[:razorpay_payment_id].present?
+      response = Razorpay::Payment.fetch(params[:razorpay_payment_id]).capture({amount:39900})
+      # elsif params[:payment_id].present?
+        # response = params[:payment_id]
+      # end 
       unless response.nil?
         resource.save
         yield resource if block_given?
@@ -99,4 +107,5 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # def after_inactive_sign_up_path_for(resource)
   #   super(resource)
   # end
+
 end
