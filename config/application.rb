@@ -11,7 +11,7 @@ module CalmIndia
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 5.1
     config.active_job.queue_adapter = :sidekiq
-    config.paytm_keys = YAML::load_file("#{Rails.root}/config/paytm.yml")[Rails.env]
+    # config.paytm_keys = YAML::load_file("#{Rails.root}/config/paytm.yml")[Rails.env]
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
