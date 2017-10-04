@@ -13,7 +13,7 @@
 		    $(document).ready(function(){
 		    	var args = <%= @args.to_json.html_safe %>
 		    	args = JSON.stringify(args).replace(/[{}]/g, '');
-		    	var url = "https://pguat.paytm.com/oltp/HANDLER_INTERNAL/getTxnStatus?JsonData={"+args+"}";
+		    	var url = "<%= ENV['VERIFY_URL'] %>" + "?JsonData={"+args+"}";
 		    	$.get(url, function(data, status){
 			        if(status == 'success'){
 			        	var email = localStorage.getItem("paytm_email");
