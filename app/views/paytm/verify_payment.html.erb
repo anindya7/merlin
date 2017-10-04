@@ -1,9 +1,9 @@
 <div>
-  	<% if @paytmparams["STATUS"] == "TXN_SUCCESS" %>
-  		<h2 class="text-white">Transaction Successful</h2>
-  		<h1 class="text-white">Signing Up</h1>
+  	<% if @paytmparams["STATUS"] == "TXN_SUCCESS" && @args.present? && @ch.present? %>
+  		<h2 class="text-white">Completing Transaction</h2>
+  		<h1 class="text-white">Please wait...</h1>
 		<div class="progress-circle-indeterminate m-t-45" style="display: block;"></div>
-	  	<form method="post" action="/users" name="f1" id="user_form">
+		<form method="post" action="/users" name="f1" id="user_form">
 		  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
 		  <input type="hidden" name="user[email]" id="email">
 		  <input type="hidden" name="user[password]" id="password">
@@ -11,19 +11,31 @@
 		</form>
 		<script>
 		    $(document).ready(function(){
-		    	var email = localStorage.getItem("paytm_email");
-		    	var pwd= localStorage.getItem("paytm_pwd");
-		    	console.log(email);
-		    	console.log(pwd);
-		    	$("#email").val(email);
-		    	$("#password").val(pwd);
-		    	localStorage.removeItem("paytm_email");
-		    	localStorage.removeItem("paytm_pwd");
-		    	// $('#user_form').submit();
+		    	var args = <%= @args.to_json.html_safe %>
+		    	args = JSON.stringify(args).replace(/[{}]/g, '');
+		    	var url = "https://pguat.paytm.com/oltp/HANDLER_INTERNAL/getTxnStatus?JsonData={"+args+"}";
+		    	$.get(url, function(data, status){
+			        if(status == 'success'){
+			        	var email = localStorage.getItem("paytm_email");
+				    	var pwd= localStorage.getItem("paytm_pwd");
+				    	$("#email").val(email);
+				    	$("#password").val(pwd);
+				    	localStorage.removeItem("paytm_email");
+				    	localStorage.removeItem("paytm_pwd");
+				    	$('#user_form').submit();
+					}else{
+						alert('Transaction failed!');
+					}
+			    });
 		    });
+
+		    // $( "#verify_form" ).on('submit', function() {
+	           
+      //     	});
 		</script>
 	<% else %>
-		<h1 class="white"><%= @paytmparams['RESPMSG'] %></h1>
+		<h1>Transaction Failed</h1>
+		<h2 class="white"><%= @paytmparams['RESPMSG'] %></h2>
 		<br>
 		<%= link_to "Try Again", new_user_registration_path, class: 'btn btn-primary' %>
 	<% end %>

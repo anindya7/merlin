@@ -136,11 +136,11 @@
             <input type="hidden" value="Hidden Element" name="hidden">
           </form>
         <% end %>
-        <!-- <strong>OR</strong>
-        <br> -->
-        <%#= form_tag paytm_payment_path, method: :post, remote: false, :style => "" do %>
-            <!-- <button class="razorpay-payment-button-2">Sign Up with PayTM (₹399)</button> -->
-        <%# end %>
+        <strong>OR</strong>
+        <br>
+        <%= form_tag paytm_payment_path, method: :post, remote: false, :style => "" do %>
+            <button class="razorpay-payment-button-2">Sign Up with PayTM (₹399)</button>
+        <% end %>
       </div>
     </div>
     <%= render "devise/shared/links" %>

@@ -13,17 +13,17 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def create
     # render json: params
     build_resource(sign_up_params)
-    # if params[:razorpay_payment_id].present?
-    resource.payment_id = params[:razorpay_payment_id] 
-    # elsif params[:payment_id].present?
-      # resource.payment_id = params[:payment_id] 
-    # end
+    if params[:razorpay_payment_id].present?
+      resource.payment_id = params[:razorpay_payment_id] 
+    elsif params[:payment_id].present?
+      resource.payment_id = params[:payment_id] 
+    end
     if resource.valid?
-      # if params[:razorpay_payment_id].present?
-      response = Razorpay::Payment.fetch(params[:razorpay_payment_id]).capture({amount:39900})
-      # elsif params[:payment_id].present?
-        # response = params[:payment_id]
-      # end 
+      if params[:razorpay_payment_id].present?
+        response = Razorpay::Payment.fetch(params[:razorpay_payment_id]).capture({amount:39900})
+      elsif params[:payment_id].present?
+        response = params[:payment_id]
+      end 
       unless response.nil?
         resource.save
         yield resource if block_given?

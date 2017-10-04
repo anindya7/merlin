@@ -43,14 +43,17 @@ class PaytmController < ApplicationController
     if @is_valid_checksum == true
       if @paytmparams["STATUS"] == "TXN_SUCCESS"
         #     add application logic unique to your app
-        args = Hash.new
-        args = { MID: params['MID'], ORDERID: "ORDER#{params['ORDERID']}", CHECKSUMHASH: params['CHECKSUMHASH'] }
-        redirect_to 'https://pguat.paytm.com/oltp/HANDLER_INTERNAL/getTxnStatus?JsonData=' + args.to_json
-        # respond_to do |format|
-        #   format.html
-        # end
+        # @args = Hash.new
+        @paramList = Hash.new
+        @paramList["MID"] = params['MID']
+        @paramList["ORDER_ID"] = params['ORDERID']
+        @ch = generate_next_checksum(@paramList, @paytm_keys['PAYTM_MERCHANT_KEY']).gsub("\n",'')
+        @args = { MID: @paramList['MID'], ORDERID: @paramList['ORDER_ID'], CHECKSUMHASH: u(@ch) }
+        @args = @args
+        respond_to do |format|
+          format.html
+        end
       else
-      #     add application logic unique to your app
         respond_to do |format|
           format.html
         end
@@ -61,7 +64,15 @@ class PaytmController < ApplicationController
   private
 
   def get_paytm_keys
-    @paytm_keys=Rails.application.config.paytm_keys
+    # @paytm_keys=Rails.application.config.paytm_keys
+    @paytm_keys = Hash.new
+    @paytm_keys['PAYTM_MERCHANT_KEY'] = ENV['PAYTM_MERCHANT_KEY']
+    @paytm_keys['WEBSITE'] = ENV['WEBSITE']
+    @paytm_keys['MID'] = ENV['MID']
+    @paytm_keys['INDUSTRY_TYPE_ID'] = ENV['INDUSTRY_TYPE_ID']
+    @paytm_keys['CHANNEL_ID'] = ENV['CHANNEL_ID']
+    @paytm_keys['payment_url'] = ENV['payment_url']
+    @paytm_keys['CALLBACK_URL'] = ENV['CALLBACK_URL']
   end
 
 end
