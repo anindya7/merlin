@@ -5,6 +5,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable, :lockable
 
   has_many :views, dependent: :destroy
+  has_many :quiz_scores, dependent: :destroy
 
   def admin?
     admin == true

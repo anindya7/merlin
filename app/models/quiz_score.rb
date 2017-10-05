@@ -1,6 +1,7 @@
 class QuizScore < ApplicationRecord
   belongs_to :quiz
   belongs_to :course
+  belongs_to :user
 
   validates_presence_of :user_id, :course_id, :quiz_id, :taken
   validates_uniqueness_of :user_id, scope: [:course_id, :quiz_id]
