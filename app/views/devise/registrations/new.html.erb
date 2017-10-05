@@ -80,6 +80,7 @@
                   $("#email-error").html("");
                   localStorage.setItem("paytm_email", email);
                   localStorage.setItem("paytm_pwd", pwd);
+                  $("#paytm_email").val(email);
                   // console.log(localStorage.getItem("paytm_pwd"));
                   $(".razorpay-payment-button-2").unbind('click').click();
                 }else{
@@ -125,7 +126,7 @@
                 src="https://checkout.razorpay.com/v1/checkout.js"
                 data-key="<%= ENV['RAZORPAY_ID'] %>"
                 data-amount="39900"
-                data-buttontext="Sign Up with RazorPay (₹399)"
+                data-buttontext="Buy with RazorPay (₹399)"
                 data-name="Calm India"
                 data-description="A 4 WEEK COURSE ON BUILDING MENTAL RESILIENCE, TAILORED FOR INDIA."
                 data-image=""
@@ -139,7 +140,8 @@
         <strong>OR</strong>
         <br>
         <%= form_tag paytm_payment_path, method: :post, remote: false, :style => "" do %>
-            <button class="razorpay-payment-button-2">Sign Up with PayTM (₹399)</button>
+            <input type="hidden" id="paytm_email" name="paytm_email">
+            <button class="razorpay-payment-button-2">Buy with PayTM (₹399)</button>
         <% end %>
       </div>
     </div>

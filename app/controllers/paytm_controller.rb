@@ -12,7 +12,7 @@ class PaytmController < ApplicationController
     paramList["INDUSTRY_TYPE_ID"] = @paytm_keys['INDUSTRY_TYPE_ID']
     paramList["CHANNEL_ID"] = @paytm_keys['CHANNEL_ID']
     paramList["TXN_AMOUNT"] = 399
-    paramList["EMAIL"] = 'tejas.tholpadi7@gmail.com'
+    paramList["EMAIL"] = params['paytm_email']
     paramList["WEBSITE"] = @paytm_keys['WEBSITE']
     paramList["CALLBACK_URL"] = @paytm_keys['CALLBACK_URL']
     @paramList=paramList
