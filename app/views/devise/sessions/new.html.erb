@@ -1,26 +1,34 @@
+<br>
+<br>
 <div class="row">
-  <div class="col-md-4 offset-md-4">
-    <div class="card">
-      <div class="card-header">
-        <div class="card-title">
-          <span class="font-montserrat fs-11 all-caps">
-            Connect using facebook
-          </span>
-        </div>
-      </div>
-      <div class="card-block" >
-        <!-- <div class="form-group mobile required user_mobile_no" style="text-align: left;">
-          <label class="control-label mobile_no required" for="user_mobile_no">Enter Mobile No</label>
-          <input class="form-control string email optional" autofocus="autofocus" type="tel" value="" name="mobile_no" id="user_mobile_no" style="background-color: #d3d3d3;">
-        </div> -->
-        <br>
-        <%= link_to user_facebook_omniauth_authorize_path, class: 'btn btn-block', style: 'background-color: #3b5998;' do %>
-          <i class="fa fa-facebook" style="color:white;"></i> &nbsp;&nbsp;<span style="color: white; font-weight: bold;">Connect</span>
-        <% end %>
+  <div class="col-md-6">
+    <h1 class="text-white" style="font-weight: bold;">Join CalmIndia, be a better you!</h1>
+    <br>
+    <ul style="text-align: left;">
+      <li class="text-white"><h4 class="text-white" style="font-weight: bold;">Developed based on Cognitive Behavorial Therapy</h4></li>
+      <li class="text-white"><h4 class="text-white" style="font-weight: bold;">Referenced from science backed research papers</h4></li>
+      <li class="text-white"><h4 class="text-white" style="font-weight: bold;">Comprehensive videos, audio books and flash cards.</h4></li>
+    </ul>
+    <h2 class="text-white" style="font-weight: bold;">Anytime, anywhere!</h2>
+  </div>
+  <div class="col-md-6">
+    <div class="card" style="padding-top: 20px; padding-bottom: 2px;">
+    <div class="card-header">
+      <div class="card-title">
+        <span class="font-montserrat all-caps" style="font-size: 14px;">
+          Connect using facebook
+        </span>
       </div>
     </div>
-    <div class="links_white">
-    <%#= render "devise/shared/links" %>
+    <div class="card-block" >
+      
+      <p>Get in touch with the most powerful mental health platform in India!</p>
+      <p>Sign up or Login if you've already registered.</p>
+      <br>
+      <%= link_to user_facebook_omniauth_authorize_path, class: 'btn btn-block btn-lg m-b-5', style: 'background-color: #3b5998;' do %>
+        <i class="fa fa-facebook" style="color:white;"></i> &nbsp;&nbsp;<span style="color: white; font-weight: bold;">Connect</span>
+      <% end %>
     </div>
+  </div>
   </div>
 </div>

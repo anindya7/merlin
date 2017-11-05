@@ -1,7 +1,7 @@
 class HomeController < ApplicationController
   before_action :check_guest, only: [:index]
   before_action :authenticate_user!, only: [:refer, :submit_refer]
-
+  before_action :check_if_admin, only: [:admin_signin]
   def index 
   end
 
@@ -37,4 +37,12 @@ class HomeController < ApplicationController
   def admin_signin
 
   end
+
+  private
+
+    def check_if_admin
+      if user_signed_in? and current_user.admin == true
+        redirect_to rails_admin_path
+      end
+    end
 end
