@@ -38,12 +38,13 @@
       <div class="card-block" style="padding:10px;">
         <div class="wrapper">
          <div class="videocontent" style="width:100%;">
-            <video id="my-video" class="video-js vjs-default-skin vjs-big-play-centered vjs-16-9" controls preload="auto"  data-setup="{}">
-            <source src="<%= @video.url %>" type='video/mp4'>
-            <p class="vjs-no-js">
-              To view this video please enable JavaScript, and consider upgrading to a web browser that
-              <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
-            </p>
+            <video id="my-video" class="video-js vjs-default-skin vjs-big-play-centered vjs-16-9" controls preload="auto"  data-setup='{}'>
+              <!-- <source src="<%= @video.url %>" type='video/mp4' res="720" label="HD" /> -->
+              <!-- <source src="<%= @video.sd_url %>" type="video/mp4"  res="360" label="SD" /> -->
+              <p class="vjs-no-js">
+                To view this video please enable JavaScript, and consider upgrading to a web browser that
+                <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+              </p>
           </video>
          </div>
         </div>
@@ -184,6 +185,38 @@
       $("body").on("contextmenu",function(e){
           return false;
       });
+      // fire up the plugin
+      videojs('my-video', {
+        controls: true,
+        plugins: {
+          videoJsResolutionSwitcher: {
+            ui: true,
+            default: 'low', // Default resolution [{Number}, 'low', 'high'],
+            dynamicLabel: true // Display dynamic labels or gear symbol
+          }
+        }
+      }, function(){
+        var player = this;
+        window.player = player
+        player.updateSrc([
+          {
+            src: '<%= @video.sd_url %>',
+            type: 'video/mp4',
+            label: 'SD',
+            res: 360
+          },
+          {
+            src: '<%= @video.url %>',
+            type: 'video/mp4',
+            label: 'HD',
+            res: 720
+          }
+        ])
+        player.on('resolutionchange', function(){
+          console.info('Source changed to %s', player.src())
+        })
+      })
+      videojs('my-video').videoJsResolutionSwitcher()
   });
   </script>
 <script>

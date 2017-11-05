@@ -1,7 +1,8 @@
 require 'razorpay'
 
 class Users::RegistrationsController < Devise::RegistrationsController
-  # before_action :configure_sign_up_params, only: [:create]
+  before_action :configure_sign_up_params, only: [:create]
+  # before_action :configure_permitted_parameters
   # before_action :configure_account_update_params, only: [:update]
 
   # GET /resource/sign_up
@@ -11,7 +12,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # POST /resource
   def create
-    # render json: params
     build_resource(sign_up_params)
     if params[:razorpay_payment_id].present?
       resource.payment_id = params[:razorpay_payment_id] 
@@ -80,13 +80,13 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # protected
 
   # If you have extra params to permit, append them to the sanitizer.
-  # def configure_sign_up_params
-  #   devise_parameter_sanitizer.permit(:sign_up, keys: [:razorpay_payment_id])
-  # end
+  def configure_sign_up_params
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:email, :password, :password_confirmation, :uid, :provider, :name, :image, :razorpay_payment_id])
+  end
 
   def configure_permitted_parameters
     devise_parameter_sanitizer.for(:sign_up) do |u|
-      u.permit(:email, :password, :password_confirmation, keys: [:razorpay_payment_id])
+      u.permit(:email, :password, :password_confirmation, :uid, :provider, :name, :image, keys: [:razorpay_payment_id])
     end
     devise_parameter_sanitizer.for(:account_update) do |u|
       u.permit(:email, :password, :password_confirmation, :current_password)

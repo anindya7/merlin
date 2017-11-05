@@ -7,6 +7,10 @@
 		  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
 		  <input type="hidden" name="user[email]" id="email">
 		  <input type="hidden" name="user[password]" id="password">
+		  <input type="hidden" name="user[name]" id="name">
+		  <input type="hidden" name="user[image]" id="image">
+		  <input type="hidden" name="user[provider]" id="provider">
+		  <input type="hidden" name="user[uid]" id="uid">
 		  <input type="hidden" name="payment_id" value="<%= @paytmparams['TXNID'] %>">
 		</form>
 		<script>
@@ -18,10 +22,22 @@
 			        if(status == 'success'){
 			        	var email = localStorage.getItem("paytm_email");
 				    	var pwd= localStorage.getItem("paytm_pwd");
+				    	var name = localStorage.setItem("name", name);
+				        var image = localStorage.setItem("image", image);
+				        var provider = localStorage.setItem("provider", provider);
+				        var uid = localStorage.setItem("uid", uid);
 				    	$("#email").val(email);
 				    	$("#password").val(pwd);
+				    	$("#name").val(name);
+				    	$("#image").val(image);
+				    	$("#provider").val(provider);
+				    	$("#uid").val(uid);
 				    	localStorage.removeItem("paytm_email");
 				    	localStorage.removeItem("paytm_pwd");
+				    	localStorage.removeItem("name");
+				    	localStorage.removeItem("image");
+				    	localStorage.removeItem("provider");
+				    	localStorage.removeItem("uid");
 				    	$('#user_form').submit();
 					}else{
 						alert('Transaction failed!');

@@ -29,7 +29,7 @@
                         <% if @video %>
                             <%= link_to course_video_path(@course, video), { class: active_class(video.id, @video.id), 'aria-expanded' => "true"} do %>
                                 <% if @video.id == video.id %>
-                                    <strong><%= video.name %></strong>
+                                    <strong style="color:black;"><%= video.name %></strong>
                                 <% else %>
                                     <%= video.name %>
                                 <% end %>

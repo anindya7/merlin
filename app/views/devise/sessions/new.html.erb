@@ -1,34 +1,26 @@
 <div class="row">
   <div class="col-md-4 offset-md-4">
     <div class="card">
-      <div class="card-block">
-        <%= simple_form_for(resource, as: resource_name, url: session_path(resource_name), html: {class: 'form_horizontal',role: "form", autocomplete: "off", novalidate: "novalidate"}) do |f| %>
-          <div class="row">
-            <div class="col-md-12">
-              <div class="form-group form-group-default">
-                <%= f.input :email, required: true, autofocus: true, class: "form-control", 'aria-required' => "true", placeholder: "example@example.com" %>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-12">
-              <div class="form-group form-group-default">
-                <%= f.input :password, required: true, class: "form-control", 'aria-required' => "true", placeholder: "Your password here"  %>
-              </div>
-            </div>
-          </div>
-          <div class="clearfix"></div>
-          <div class="row">
-            <div class="col-sm-12">
-              <%= f.submit "Log in", class: 'btn btn-primary' %>
-            </div> 
-              
-          </div>
+      <div class="card-header">
+        <div class="card-title">
+          <span class="font-montserrat fs-11 all-caps">
+            Connect using facebook
+          </span>
+        </div>
+      </div>
+      <div class="card-block" >
+        <!-- <div class="form-group mobile required user_mobile_no" style="text-align: left;">
+          <label class="control-label mobile_no required" for="user_mobile_no">Enter Mobile No</label>
+          <input class="form-control string email optional" autofocus="autofocus" type="tel" value="" name="mobile_no" id="user_mobile_no" style="background-color: #d3d3d3;">
+        </div> -->
+        <br>
+        <%= link_to user_facebook_omniauth_authorize_path, class: 'btn btn-block', style: 'background-color: #3b5998;' do %>
+          <i class="fa fa-facebook" style="color:white;"></i> &nbsp;&nbsp;<span style="color: white; font-weight: bold;">Connect</span>
         <% end %>
       </div>
     </div>
     <div class="links_white">
-    <%= render "devise/shared/links" %>
+    <%#= render "devise/shared/links" %>
     </div>
   </div>
 </div>

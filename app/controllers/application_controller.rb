@@ -3,8 +3,8 @@ class ApplicationController < ActionController::Base
   layout :layout_by_resource
 
   def layout_by_resource
-    if (devise_controller? && resource_name == :user && action_name != 'edit') || 
-      (controller_name.eql?('home') && action_name == 'refer') || 
+    if (devise_controller? && ( resource_name == :user) && action_name != 'edit') || 
+      (controller_name.eql?('home') && (action_name == 'refer' || action_name == 'research'|| action_name == 'admin_signin') ) || 
       (controller_path.eql?('devise/passwords') && resource_name == :user) ||
       (controller_name.eql?('paytm'))
       "homepages"

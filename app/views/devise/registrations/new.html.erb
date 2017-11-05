@@ -1,125 +1,51 @@
 <% content_for :styles do %>
   <script>
     $(document).ready(function(){
-        $(".razorpay-payment-button").click( function(e) {
-          e.preventDefault();
-          var email = $("#user_email").val();
-          var pwd = $("#user_password").val();
-
-          if(!email){
-            $("#pwd-error").html("");
-            $("#email-error").html("<div class='text-danger' style='margin: 0px'>Enter a valid email.</div>");
-          }else if(!(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/.test(email))){
-            $("#pwd-error").html("");
-            $("#email-error").html("<div class='text-danger' style='margin: 0px'>Invalid email.</div>");
-          }else if(!pwd || pwd.length < 6 ){
-            $("#email-error").html("");
-            $("#pwd-error").html("<div class='text-danger' style='margin: 0px'>Enter a minimum of 6 characters.</div>");
-          }else if(pwd.length > 20){
-            $("#email-error").html("");
-            $("#pwd-error").html("<div class='text-danger' style='margin: 0px'>Enter a maximum of 20 characters.</div>");
-          }
-          else {
-            $.ajax({
-              type: 'POST',
-              contentType: "application/json; charset=utf-8",
-              url: "<% ENV['DEFAULT_HOST'] %>/checkuser?email="+$("#user_email").val(),
-              headers: { },
-              data : JSON.stringify({
-                authenticity_token: "<%= form_authenticity_token %>",
-              }),
-              dataType: "json",
-              success: function (result) {
-                if(result['email_exists'] == false){
-                  $("#pwd-error").html("");
-                  $("#email-error").html("");
-                  $( "#new_user" ).submit();
-                }else{
-                  $("#pwd-error").html("");
-                  $("#email-error").html("<div class='text-danger' style='margin: 0px'>Email has already been taken.</div>");
-                }
-              },
-              error: function (){
-                console.log("something wrong!");
-              }
-             });
-          }
-       });
-
-        $(".razorpay-payment-button-2").click( function(e) {
-          e.preventDefault();
-          var email = $("#user_email").val();
-          var pwd = $("#user_password").val();
-
-          if(!email){
-            $("#pwd-error").html("");
-            $("#email-error").html("<div class='text-danger' style='margin: 0px'>Enter a valid email.</div>");
-          }else if(!(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/.test(email))){
-            $("#pwd-error").html("");
-            $("#email-error").html("<div class='text-danger' style='margin: 0px'>Invalid email.</div>");
-          }else if(!pwd || pwd.length < 6 ){
-            $("#email-error").html("");
-            $("#pwd-error").html("<div class='text-danger' style='margin: 0px'>Enter a minimum of 6 characters.</div>");
-          }else if(pwd.length > 20){
-            $("#email-error").html("");
-            $("#pwd-error").html("<div class='text-danger' style='margin: 0px'>Enter a maximum of 20 characters.</div>");
-          }
-          else {
-            $.ajax({
-              type: 'POST',
-              contentType: "application/json; charset=utf-8",
-              url: "<% ENV['DEFAULT_HOST'] %>/checkuser?email="+$("#user_email").val(),
-              headers: { },
-              data : JSON.stringify({
-                authenticity_token: "<%= form_authenticity_token %>",
-              }),
-              dataType: "json",
-              success: function (result) {
-                if(result['email_exists'] == false){
-                  $("#pwd-error").html("");
-                  $("#email-error").html("");
-                  localStorage.setItem("paytm_email", email);
-                  localStorage.setItem("paytm_pwd", pwd);
-                  $("#paytm_email").val(email);
-                  // console.log(localStorage.getItem("paytm_pwd"));
-                  $(".razorpay-payment-button-2").unbind('click').click();
-                }else{
-                  $("#pwd-error").html("");
-                  $("#email-error").html("<div class='text-danger' style='margin: 0px'>Email has already been taken.</div>");
-                }
-              },
-              error: function (){
-                console.log("something wrong!");
-              }
-             });
-          }
-       });
+      $(".razorpay-payment-button-2").click( function(e) {
+        e.preventDefault();
+        var email = $("#user_email").val();
+        var pwd = $("#user_password").val();
+        var name = $("#user_name").val();
+        var image = $("#user_image").val();
+        var provider = $("#user_provider").val();
+        var uid = $("#user_uid").val();
+        localStorage.setItem("paytm_email", email);
+        localStorage.setItem("paytm_pwd", pwd);
+        localStorage.setItem("name", name);
+        localStorage.setItem("image", image);
+        localStorage.setItem("provider", provider);
+        localStorage.setItem("uid", uid);
+        $("#paytm_email").val(email);
+        $(".razorpay-payment-button-2").unbind('click').click();
+      });
     });
   </script>
 <% end %>
 <div class="row">
   <div class="col-md-4 offset-md-4">
     <div class="card">
+      <div class="card-header">
+        <div class="card-title">
+          <span class="font-montserrat fs-11 all-caps">
+            Payment options
+          </span>
+        </div>
+        <hr>
+      </div>
       <div class="card-block">
+        <% if @user.present? %>
+          <% resource_name = :user %>
+          <% resource = @user || User.new %>
+        <% end %>
+        <%#= resource.attributes %>
         <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: {class: 'form_horizontal', role: "form", novalidate: false}) do |f| %>
           <%= f.error_notification %>
-          <div class="row">
-            <div class="col-md-12" >
-              <div class="form-group form-group-default" >
-                <%= f.input :email, required: true, autofocus: true, class: "form-control", placeholder:"example@example.com", pattern: '[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$' %>
-                <div id="email-error"></div>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-12">
-              <div class="form-group form-group-default">
-                <%= f.input :password, required: true, class: "form-control", placeholder:"#{@minimum_password_length} characters minimum", minlength: 6, maxlength: 20 %>
-                <div id="pwd-error"></div>
-              </div>
-              <br/>
-            </div>
-          </div>
+          <%= f.input :email, :as => :hidden, value: resource.email %>
+          <%= f.input :password, :as => :hidden, value: resource.password %>
+          <%= f.input :name, :as => :hidden, value: resource.name %>
+          <%= f.input :uid, :as => :hidden, value: resource.uid %>
+          <%= f.input :provider, :as => :hidden, value: resource.provider %>
+          <%= f.input :image, :as => :hidden, value: resource.image %>
           <form action="/users" method="POST">
             <!-- Note that the amount is in paise = 50 INR -->
             <script
@@ -145,6 +71,6 @@
         <% end %>
       </div>
     </div>
-    <%= render "devise/shared/links" %>
+    <%#= render "devise/shared/links" %>
   </div>
 </div>

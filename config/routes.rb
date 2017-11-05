@@ -1,13 +1,13 @@
 Rails.application.routes.draw do
   mount RailsAdmin::Engine => '/mercmerc', as: 'rails_admin'
-  devise_for :users, controllers: { :registrations => "users/registrations" }
+  devise_for :users, controllers: { :registrations => "users/registrations", :omniauth_callbacks => "users/omniauth_callbacks" }
   devise_scope :user do
     authenticated :user do
       root 'courses#index', as: :authenticated_root
     end
 
     unauthenticated do
-      root 'devise/registrations#new', as: :unauthenticated_root
+      root 'devise/sessions#new', as: :unauthenticated_root
     end
   end
   resources :courses, only: [:index, :show] do
@@ -26,6 +26,8 @@ Rails.application.routes.draw do
   get '/refer' => 'home#refer'
   post '/refer' => 'home#submit_refer'
   post '/checkuser', to: 'home#checkuser'
+  get '/research' => 'home#research'  
+  get '/merc/sign_in' => 'home#admin_signin' # Admin Sign in
   match '/paytm_payment' => 'paytm#start_payment', via: [:post], :as => :paytm_payment
   match '/confirm_payment' => 'paytm#verify_payment', via: [:post]
   # root "home#index"

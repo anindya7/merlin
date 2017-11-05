@@ -19,6 +19,7 @@ gem 'figaro'
 gem 'seed_dump'
 gem 'rollbar'
 gem 'sidekiq'
+gem 'omniauth-facebook'
 # Payment gateways
 gem 'razorpay'
 gem 'ccavenue'

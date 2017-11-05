@@ -16,4 +16,16 @@ module ApplicationHelper
     QuizScore.where(user_id: user, quiz_id: quiz).any? ? true : false
   end
 
+  # def resource_name
+  #   :user
+  # end
+
+  # def resource
+  #   @resource ||= User.new
+  # end
+
+  # def devise_mapping
+  #   @devise_mapping ||= Devise.mappings[:user]
+  # end
+
 end

@@ -4,7 +4,7 @@
   <h1 class="text-white">Please do not refresh this page...</h1>
 </center>
 <form method="post" action="<%= @paytm_keys['payment_url'] %>" name="f1">
-  <input type="hidden" name="authenticity_token" value=""<%= form_authenticity_token %>"">
+  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
   <% keys = @paramList.keys %>
   <% keys.each do |k| %>
     <input type="hidden" name="<%= k %>" value="<%= @paramList[k] %>">

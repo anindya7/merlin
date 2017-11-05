@@ -1,0 +1,32 @@
+<div class="row">
+  <div class="col-md-4 offset-md-4">
+    <div class="card">
+      <div class="card-block">
+        <% resource_name = :user %>
+        <% resource = @user || User.new %>
+        <%= simple_form_for(resource, as: resource_name, url: session_path(resource_name), html: {class: 'form_horizontal',role: "form", autocomplete: "off", novalidate: "novalidate"}) do |f| %>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group form-group-default">
+                <%= f.input :email, required: true, autofocus: true, class: "form-control", 'aria-required' => "true", placeholder: "example@example.com" %>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group form-group-default">
+                <%= f.input :password, required: true, class: "form-control", 'aria-required' => "true", placeholder: "Your password here"  %>
+              </div>
+            </div>
+          </div>
+          <div class="clearfix"></div>
+          <div class="row">
+            <div class="col-sm-12">
+              <%= f.submit "Log in", class: 'btn btn-primary' %>
+            </div> 
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

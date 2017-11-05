@@ -29,4 +29,12 @@ class HomeController < ApplicationController
       format.json {render :json => {email_exists: @user.any?}}
     end
   end
+
+  def research
+
+  end
+
+  def admin_signin
+
+  end
 end
