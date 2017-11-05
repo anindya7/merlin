@@ -45,7 +45,7 @@
               </button>
               <div class="dropdown-menu dropdown-menu-right profile-dropdown" role="menu">
                 <% if current_user %>
-                  <%= link_to"<i class='pg-settings_small'></i> Settings".html_safe, edit_registration_path(current_user), class: 'dropdown-item', style: 'color:black' %>
+                  <%#= link_to"<i class='pg-settings_small'></i> Settings".html_safe, edit_registration_path(current_user), class: 'dropdown-item', style: 'color:black' %>
                   <%= link_to destroy_user_session_path, :method => :delete, class: 'clearfix bg-master-lighter dropdown-item', style: 'color:black' do %>
                     <span class="pull-left">Logout</span>
                     <span class="pull-right"><i class="pg-power"></i></span>
