@@ -1,22 +1,58 @@
+ <style type="text/css">
+ @media (min-width: 768px) {
+    .ttc
+    {
+      text-align:left !important;
+    }
+
+    .card20
+    {
+      margin-top:30px;
+    }
+  }
+    @media (max-width: 767px) {
+      .crow2
+      {
+        margin-top:20px;
+      }
+      .ttc {
+        text-align: center !important;
+      } 
+      .ttc ul
+      { text-align:center !important;
+        list-style-type:none !important;}
+          .card20
+    {
+      padding-top:10px !important;
+    }
+    }
+  
+  </style>
 <br>
 <br>
-<div class="row">
   <div class="col-md-12" style="margin-bottom: 20px;">
     <%= image_tag "racoon-hero.png", height: '250px'%>
   </div>
-  <div class="col-md-6">
-    <h1 class="text-white" style="font-weight: bold; font-size:34px; margin-top:25px; font-family: Roboto; ">Join Calm India, be a better you!</h1>
+
+<div class="row calmrow">
+
+  <div class ="clearfloat" style="clear:both;">
+  </div>
+
+  <div class="col-md-6 ttc order-2 crow2" style="padding:40px; padding-top:5px; font-family: Roboto;">
+    <h1 class="text-white text-xs-center" style="font-weight: bold; font-size:34px; ">Be a better you!</h1>
+     <hr style="opacity:0.3;">
     <br>
-    <ul style="text-align: left; text-indent: 30px;">
-      <li class="text-white"><h4 class="text-white" style="font-weight: bold; font-size:16px; font-family: Roboto; opacity: 0.75;">Developed based on Cognitive Behavorial Therapy</h4></li>
-      <li class="text-white"><h4 class="text-white" style="font-weight: bold; font-size:16px;font-family: Roboto; opacity: 0.75;">Referenced from science backed research papers</h4></li>
-      <li class="text-white"><h4 class="text-white" style="font-weight: bold; font-size:16px;font-family: Roboto; opacity: 0.75;">Comprehensive videos, audio books and flash cards.</h4></li>
+    <ul class="text-xs-center" style="text-align: left; padding:0; margin:0;">
+      <li class="text-white"><h4 class="text-white" style=" font-size:16px; font-family: Roboto;">Developed based on Cognitive Behavorial Therapy</h4></li>
+      <li class="text-white"><h4 class="text-white" style=" font-size:16px;font-family: Roboto;">Referenced from science backed research papers</h4></li>
+      <li class="text-white"><h4 class="text-white" style=" font-size:16px;font-family: Roboto;">Comprehensive videos, audio books and flash cards</h4></li>
+      <li class="text-white"><h4 class="text-white" style=" font-size:16px;font-family: Roboto;">Anytime, anywhere!</h4></li>
     </ul>
     <br/>
-    <h2 class="text-white" style="font-weight: bold; font-size:26px;font-family: Roboto;">Anytime, anywhere!</h2>
   </div>
-  <div class="col-md-6">
-    <div class="card" style="height:350px; padding-top: 70px;">
+  <div class="col-md-6 flex-first flex-md-unordered">
+    <div class="card card20" style="height:350px; padding-top: 70px;">
     <div class="card-header">
       <div class="card-title">
         <span class="font-montserrat all-caps" style="font-size: 14px;">
