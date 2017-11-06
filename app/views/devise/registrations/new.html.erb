@@ -24,10 +24,6 @@
         $("#paytm_email").val(email);
         $(".razorpay-payment-button-2").unbind('click').click();
       });
-
-      $("#temp_btn").click( function(){
-        $("#temp").css('visibility', 'visible');
-      });
     });
   </script>
 <% end %>
@@ -73,22 +69,14 @@
             <input type="hidden" value="Hidden Element" name="hidden">
           </form>
         <% end %>
-        <div style="visibility: hidden" id="temp">
-          <strong>OR</strong>
-          <br>
-          <%= form_tag paytm_payment_path, method: :post, remote: false, :style => "" do %>
+        <strong>OR</strong>
+        <br>
+        <%= form_tag paytm_payment_path, method: :post, remote: false, :style => "" do %>
             <input type="hidden" id="paytm_email" name="paytm_email">
             <button class="razorpay-payment-button-2">Buy with PayTM (₹399)</button>
         <% end %>
-        </div>
       </div>
     </div>
-    <button id="temp_btn" href="#" style="color:#536DFE;background-color: Transparent;
-    background-repeat:no-repeat;
-    border: none;
-    cursor:pointer;
-    overflow: hidden;
-    outline:none;">te</button>
     <%#= render "devise/shared/links" %>
   </div>
 </div>
