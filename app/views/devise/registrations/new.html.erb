@@ -9,6 +9,12 @@
         var image = $("#user_image").val();
         var provider = $("#user_provider").val();
         var uid = $("#user_uid").val();
+        localStorage.removeItem("paytm_email");
+        localStorage.removeItem("paytm_pwd");
+        localStorage.removeItem("name");
+        localStorage.removeItem("image");
+        localStorage.removeItem("provider");
+        localStorage.removeItem("uid");
         localStorage.setItem("paytm_email", email);
         localStorage.setItem("paytm_pwd", pwd);
         localStorage.setItem("name", name);
@@ -17,6 +23,10 @@
         localStorage.setItem("uid", uid);
         $("#paytm_email").val(email);
         $(".razorpay-payment-button-2").unbind('click').click();
+      });
+
+      $("#temp_btn").click( function(){
+        $("#temp").css('visibility', 'visible');
       });
     });
   </script>
@@ -63,14 +73,22 @@
             <input type="hidden" value="Hidden Element" name="hidden">
           </form>
         <% end %>
-        <!-- <strong>OR</strong> -->
-        <!-- <br> -->
-        <%#= form_tag paytm_payment_path, method: :post, remote: false, :style => "" do %>
-            <!-- <input type="hidden" id="paytm_email" name="paytm_email"> -->
-            <!-- <button class="razorpay-payment-button-2">Buy with PayTM (₹399)</button> -->
-        <%# end %>
+        <div style="visibility: hidden" id="temp">
+          <strong>OR</strong>
+          <br>
+          <%= form_tag paytm_payment_path, method: :post, remote: false, :style => "" do %>
+            <input type="hidden" id="paytm_email" name="paytm_email">
+            <button class="razorpay-payment-button-2">Buy with PayTM (₹399)</button>
+        <% end %>
+        </div>
       </div>
     </div>
+    <button id="temp_btn" href="#" style="color:#536DFE;background-color: Transparent;
+    background-repeat:no-repeat;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;
+    outline:none;">te</button>
     <%#= render "devise/shared/links" %>
   </div>
 </div>

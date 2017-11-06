@@ -22,10 +22,10 @@
 			        if(status == 'success'){
 			        	var email = localStorage.getItem("paytm_email");
 				    	var pwd= localStorage.getItem("paytm_pwd");
-				    	var name = localStorage.setItem("name", name);
-				        var image = localStorage.setItem("image", image);
-				        var provider = localStorage.setItem("provider", provider);
-				        var uid = localStorage.setItem("uid", uid);
+				    	var name = localStorage.getItem("name");
+				        var image = localStorage.getItem("image");
+				        var provider = localStorage.getItem("provider");
+				        var uid = localStorage.getItem("uid");
 				    	$("#email").val(email);
 				    	$("#password").val(pwd);
 				    	$("#name").val(name);

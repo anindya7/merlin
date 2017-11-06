@@ -11,11 +11,12 @@ class PaytmController < ApplicationController
     paramList["CUST_ID"] = "#{Time.now.to_i.to_s}"
     paramList["INDUSTRY_TYPE_ID"] = @paytm_keys['INDUSTRY_TYPE_ID']
     paramList["CHANNEL_ID"] = @paytm_keys['CHANNEL_ID']
-    paramList["TXN_AMOUNT"] = 399
+    paramList["TXN_AMOUNT"] = ENV['COURSE_AMOUNT']
     paramList["EMAIL"] = params['paytm_email']
     paramList["WEBSITE"] = @paytm_keys['WEBSITE']
     paramList["CALLBACK_URL"] = @paytm_keys['CALLBACK_URL']
     @paramList=paramList
+    STDOUT.puts paramList
     @checksum_hash=generate_checksum()
     @user_details = Hash.new
     @user_details["email"] = 'tejas.tholpadi7@gmail.com'
