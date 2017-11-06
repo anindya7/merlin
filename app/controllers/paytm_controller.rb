@@ -19,9 +19,8 @@ class PaytmController < ApplicationController
     STDOUT.puts paramList
     @checksum_hash=generate_checksum()
     @user_details = Hash.new
-    @user_details["email"] = 'tejas.tholpadi7@gmail.com'
+    @user_details["email"] = params['paytm_email']
     @user_details["password"] = 'pass1234'
-    # render json:  { 'ch' => @checksum_hash,'pL' => @paramList, 'params' => params }
     respond_to do |format|
       format.js
       format.html
@@ -29,7 +28,6 @@ class PaytmController < ApplicationController
   end
 
   def verify_payment
-    # render json: params
     paytmparams = Hash.new
     keys = params.keys
     keys.each do |k|
