@@ -32,14 +32,38 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     if @user.persisted?
       sign_in_and_redirect @user, :event => :authentication
       set_flash_message(:notice, :success, :kind => "Facebook") if is_navigational_format?
+    elsif User.where(email: @user.email).where(provider: 'google_oauth2').any?
+      flash[:alert] = "Your email address has already been used by your Google account. Please login via Google."
+      redirect_to new_user_session_path
+    elsif @user.provider.nil? || @user.uid.nil? || @user.email.nil?
+      flash[:alert] = "There was a problem signing you in. Please register or try signing in later.."
+      redirect_to new_user_session_path
     else
       session["devise.facebook_data"] = request.env["omniauth.auth"]
       render 'devise/registrations/new'
     end
   end
 
+  # google callback
+  def google_oauth2
+    @user = User.from_omniauth(request.env['omniauth.auth'])
+    if @user.persisted?
+      sign_in_and_redirect @user, :event => :authentication
+      set_flash_message(:notice, :success, kind: 'Google') if is_navigational_format?
+    elsif User.where(email: @user.email).where(provider: 'facebook').any?
+      flash[:alert] = "Your email address has already been used by your Facebook account. Please login via Facebook."
+      redirect_to new_user_session_path
+    elsif @user.provider.nil? || @user.uid.nil? || @user.email.nil?
+      flash[:alert] = "There was a problem signing you in. Please register or try signing in later.."
+      redirect_to new_user_session_path
+    else
+      session["devise.google_oauth2_data"] = request.env["omniauth.auth"].except("extra")
+      render 'devise/registrations/new'
+    end 
+  end
+
   def failure
-    flash[:alert] = "Error occured while connecting with Facebook. Please try again."
+    flash[:alert] = "There was a problem signing you in. Please register or try signing in later.."
     redirect_to new_user_session_path
   end
 end

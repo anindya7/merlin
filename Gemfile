@@ -20,6 +20,7 @@ gem 'seed_dump'
 gem 'rollbar'
 gem 'sidekiq'
 gem 'omniauth-facebook'
+gem 'omniauth-google-oauth2'
 # Payment gateways
 gem 'razorpay'
 gem 'ccavenue'

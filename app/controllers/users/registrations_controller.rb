@@ -45,11 +45,11 @@ class Users::RegistrationsController < Devise::RegistrationsController
         end
       else
         flash[:alert] = "Error occured while making payment. The amount will be refunded. Please try again."
-        redirect_to new_user_registration_path
+        redirect_to new_user_session_path
       end
     else
       flash[:alert] = "Error while signing up. Please try again."
-      redirect_to new_user_registration_path
+      redirect_to new_user_session_path
     end
   end
 

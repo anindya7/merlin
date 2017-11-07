@@ -55,7 +55,7 @@
     <br/>
   </div>
   <div class="col-md-6 flex-first flex-md-unordered">
-    <div class="card card20" style="height:350px; padding-top: 70px;">
+    <div class="card card20" style="height:350px; padding-top: 45px;">
     <div class="card-header">
       <div class="card-title">
         <span class="font-montserrat all-caps" style="font-size: 14px;">
@@ -69,8 +69,11 @@
         <br/>
       Sign up or Login if you've already registered.</p>
       <br>
-      <%= link_to user_facebook_omniauth_authorize_path, class: 'btn btn-block btn-lg m-b-5', style: 'background-color: #3b5998;' do %>
+      <%= link_to user_facebook_omniauth_authorize_path, class: 'btn btn-block btn-lg m-b-5', style: 'background-color: #3b5998; margin-bottom:16px;' do %>
         <i class="fa fa-facebook" style="color:white;"></i> &nbsp;&nbsp;<span style="color: white; font-weight: bold;">Connect</span>
+      <% end %>
+      <%= link_to user_google_oauth2_omniauth_authorize_path, class: 'btn btn-block btn-lg m-b-5', style: 'background-color: #d34836;' do %>
+        <i class="fa fa-google-plus" style="color:white;"></i> &nbsp;&nbsp;<span style="color: white; font-weight: bold;">Connect</span>
       <% end %>
     </div>
   </div>
