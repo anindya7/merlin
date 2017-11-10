@@ -121,12 +121,12 @@
                           <div class="card-block" > 
                               <ul class="nav nav-tabs nav-tabs-simple nav-tabs-left bg-white" id="tab-3" style="width:100%;">
                               <% @videos.ordered_in_week(week).each do |video| %>
-                                  <li class="nav-item" style="margin-bottom: 5px;">
+                                  <li class="nav-item" style="margin-bottom: 15px;">
                                     <i class="fa fa-video-camera" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;<span style="font-family: Montserrat; text-transform: uppercase;"><%= video.name %></span>
                                   </li>
                               <% end %>
                               <% @quizzes.ordered_in_week(week).each do |quiz| %>
-                                  <li class="nav-item" style="margin-bottom: 5px;">
+                                  <li class="nav-item" style="margin-bottom: 15px;">
                                     <i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;<span style="font-family: Montserrat; text-transform: uppercase;"><%= quiz.name %></span>
                                   </li>
                               <% end %>
