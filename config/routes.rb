@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   mount RailsAdmin::Engine => '/mercmerc', as: 'rails_admin'
-  devise_for :users, controllers: { :registrations => "users/registrations", :omniauth_callbacks => "users/omniauth_callbacks" }
+  devise_for :users, controllers: { :registrations => "users/registrations", :omniauth_callbacks => "users/omniauth_callbacks", :sessions => 'users/sessions' }
   devise_scope :user do
     authenticated :user do
       root 'courses#index', as: :authenticated_root

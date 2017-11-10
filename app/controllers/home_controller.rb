@@ -41,8 +41,12 @@ class HomeController < ApplicationController
   private
 
     def check_if_admin
-      if user_signed_in? and current_user.admin == true
-        redirect_to rails_admin_path
+      if user_signed_in?
+        if current_user.admin == true
+          redirect_to rails_admin_path
+        else
+          redirect_to courses_path
+        end
       end
     end
 end

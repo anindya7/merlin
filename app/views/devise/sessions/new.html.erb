@@ -80,3 +80,273 @@
   <p class="text-white">We do not collect any personal information and your Facebook details will solely be stored for login purposes.</p>
   </div>
 </div>
+<hr style="opacity:0.3;">
+<div class="row">
+  <div class="col-md-6">
+    <div class="card social-card share  full-width m-b-10 no-border">
+      <div class="card-header " data-toggle="collapse" data-parent="#accordion" href="#collapseSyllabus" aria-expanded="true" aria-controls="collapseSyllabus">
+        <div class="card-title">
+          <span class="font-montserrat all-caps" style="font-size: 16px;">
+            What's bundled in the course?
+          </span>
+        </div>
+        <div class="card-controls">
+        </div>
+      </div>
+      <div id="collapseSyllabus" class="collapse show" role="tabcard" aria-labelledby="headingSyllabus" aria-expanded="true" style="">
+        <div class="card-block">
+          
+          <div class="sm-m-l-5 sm-m-r-5" style=" padding-top:10px;">
+            <div class="card-group horizontal" id="accordion" role="tablist" aria-multiselectable="true">
+              <% (1..@course.total_weeks).each do |week| %>
+                  <div class="card card-default m-b-0" style="text-align: left;">
+                      <div class="card-header " role="tab" id="headingThree">
+                          <h4 class="card-title">
+                          <% if (week == 1) %>
+                              <a data-toggle="collapse" data-parent="#accordion" href="#collapse<%= week %>" aria-expanded="true" aria-controls="collapse<%= week %>" class="">
+                               <i class="fa fa-circle text-complete fs-11"></i>&nbsp;&nbsp;&nbsp;<strong>Week <%= week %></strong>
+                              </a>
+                          <% else %>
+                              <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapse<%= week %>" aria-expanded="false" aria-controls="collapse<%= week %>">
+                                  <i class="fa fa-circle text-complete fs-11"></i>&nbsp;&nbsp;&nbsp;<strong>Week <%= week %></strong>
+                              </a>
+                          <% end %>
+                          </h4>
+                      </div>
+                      <% if (week == 1) %>
+                          <div id="collapse<%= week %>" class="collapse show" role="tabcard" aria-labelledby="heading<%= week %>" aria-expanded="true" style="">
+                      <% else %>
+                          <div id="collapse<%= week %>" class="collapse" role="tabcard" aria-labelledby="heading<%= week %>" aria-expanded="false">
+                      <% end %>
+                          <div class="card-block" > 
+                              <ul class="nav nav-tabs nav-tabs-simple nav-tabs-left bg-white" id="tab-3" style="width:100%;">
+                              <% @videos.ordered_in_week(week).each do |video| %>
+                                  <li class="nav-item" style="margin-bottom: 5px;">
+                                    <i class="fa fa-video-camera" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;<span style="font-family: Montserrat; text-transform: uppercase;"><%= video.name %></span>
+                                  </li>
+                              <% end %>
+                              <% @quizzes.ordered_in_week(week).each do |quiz| %>
+                                  <li class="nav-item" style="margin-bottom: 5px;">
+                                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;<span style="font-family: Montserrat; text-transform: uppercase;"><%= quiz.name %></span>
+                                  </li>
+                              <% end %>
+                              </ul>
+                              <br>
+                          </div>
+                      </div>
+                  </div>
+              <% end %>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+  <div class="col-md-6">
+    <div class="card social-card share  full-width m-b-10 no-border">
+      <div class="card-header">
+        <div class="card-title" style="text-transform: none;">
+          <span class="font-montserrat" style="font-size: 16px;">
+            FAQs
+          </span>
+        </div>
+      </div>
+
+      <div id="collapseSyllabus" class="collapse show" role="tabcard" aria-labelledby="headingSyllabus" aria-expanded="true" style="">
+        <div class="card-block">
+          
+          <div class="sm-m-l-5 sm-m-r-5" style=" padding-top:10px;">
+            <div class="card-group horizontal" id="accordion" role="tablist" aria-multiselectable="true">
+
+
+                  <div class="card card-default m-b-0" style="text-align: left;">
+                      <div class="card-header " role="tab" id="headingThree">
+                          <h4 class="card-title" style="text-transform: none;">
+                              <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                                  <strong>1. What is CalmIndia?</strong>
+                              </a>
+                          </h4>
+                      </div>
+                      <div id="collapseOne" class="collapse" role="tabcard" aria-labelledby="headingOne" aria-expanded="false">
+                          <div class="card-block" > 
+                              <ul class="nav nav-tabs nav-tabs-simple nav-tabs-left bg-white" id="tab-3" style="width:100%;">
+
+                                  <li class="nav-item" style="margin-bottom: 5px;">
+                                    <strong>Ans. </strong>&nbsp;<span style="font-family: Montserrat;">CalmIndia is a four week online Cognitive Behavioral Therapy based course. The course materials include videos, audio books and flashcards delivered on our platform.</span>
+                                  </li>
+
+                              </ul>
+                              <br>
+                          </div>
+                      </div>
+                  </div>
+
+                  <div class="card card-default m-b-0" style="text-align: left;">
+                      <div class="card-header " role="tab" id="headingThree">
+                          <h4 class="card-title" style="text-transform: none;">
+                              <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                  <strong>2. How long is the course for?</strong>
+                              </a>
+                          </h4>
+                      </div>
+                      <div id="collapseTwo" class="collapse" role="tabcard" aria-labelledby="headingTwo" aria-expanded="false">
+                          <div class="card-block" > 
+                              <ul class="nav nav-tabs nav-tabs-simple nav-tabs-left bg-white" id="tab-3" style="width:100%;">
+
+                                  <li class="nav-item" style="margin-bottom: 5px;">
+                                    <strong>Ans. </strong>&nbsp;<span style="font-family: Montserrat;">The course is for a duration of four weeks.</span>
+                                  </li>
+
+                              </ul>
+                              <br>
+                          </div>
+                      </div>
+                  </div>
+
+                  <div class="card card-default m-b-0" style="text-align: left;">
+                      <div class="card-header " role="tab" id="headingThree">
+                          <h4 class="card-title" style="text-transform: none;">
+                              <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                  <strong>3. What will I gain from this course?</strong>
+                              </a>
+                          </h4>
+                      </div>
+                      <div id="collapseThree" class="collapse" role="tabcard" aria-labelledby="headingThree" aria-expanded="false">
+                          <div class="card-block" > 
+                              <ul class="nav nav-tabs nav-tabs-simple nav-tabs-left bg-white" id="tab-3" style="width:100%;">
+
+                                  <li class="nav-item" style="margin-bottom: 5px;">
+                                    <strong>Ans. </strong>&nbsp;<span style="font-family: Montserrat;">Calmindia is designed to improve your overall mental health. It teaches how to deal with stress and anxiety, cultivate a positive mindset and prevent or successfully conquer the battle against depression.</span>
+                                  </li>
+
+                              </ul>
+                              <br>
+                          </div>
+                      </div>
+                  </div>
+
+                  <div class="card card-default m-b-0" style="text-align: left;">
+                      <div class="card-header " role="tab" id="headingThree">
+                          <h4 class="card-title" style="text-transform: none;">
+                              <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                  <strong>4. Where is the material for CalmIndia sourced from?</strong>
+                              </a>
+                          </h4>
+                      </div>
+                      <div id="collapseFour" class="collapse" role="tabcard" aria-labelledby="headingFour" aria-expanded="false">
+                          <div class="card-block" > 
+                              <ul class="nav nav-tabs nav-tabs-simple nav-tabs-left bg-white" id="tab-3" style="width:100%;">
+
+                                  <li class="nav-item" style="margin-bottom: 5px;">
+                                    <strong>Ans. </strong>&nbsp;<span style="font-family: Montserrat;">The course content was created by mental health professionals after going through more than 1400 research papers. See them <%= link_to "here", research_path, target: '_blank' %></span>
+                                  </li>
+
+                              </ul>
+                              <br>
+                          </div>
+                      </div>
+                  </div>
+
+                  <div class="card card-default m-b-0" style="text-align: left;">
+                      <div class="card-header " role="tab" id="headingThree">
+                          <h4 class="card-title" style="text-transform: none;">
+                              <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                                  <strong>5. How much does it cost?</strong>
+                              </a>
+                          </h4>
+                      </div>
+                      <div id="collapseFive" class="collapse" role="tabcard" aria-labelledby="headingFive" aria-expanded="false">
+                          <div class="card-block" > 
+                              <ul class="nav nav-tabs nav-tabs-simple nav-tabs-left bg-white" id="tab-3" style="width:100%;">
+
+                                  <li class="nav-item" style="margin-bottom: 5px;">
+                                    <strong>Ans. </strong>&nbsp;<span style="font-family: Montserrat;">The entire course is available for a one time fee of INR 399.</span>
+                                  </li>
+
+                              </ul>
+                              <br>
+                          </div>
+                      </div>
+                  </div>
+
+                  <div class="card card-default m-b-0" style="text-align: left;">
+                      <div class="card-header " role="tab" id="headingThree">
+                          <h4 class="card-title" style="text-transform: none;">
+                              <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+                                  <strong>6. How can I pay?</strong>
+                              </a>
+                          </h4>
+                      </div>
+                      <div id="collapseSix" class="collapse" role="tabcard" aria-labelledby="headingSix" aria-expanded="false">
+                          <div class="card-block" > 
+                              <ul class="nav nav-tabs nav-tabs-simple nav-tabs-left bg-white" id="tab-3" style="width:100%;">
+
+                                  <li class="nav-item" style="margin-bottom: 5px;">
+                                    <strong>Ans. </strong>&nbsp;<span style="font-family: Montserrat;">Payment is supported via PayTM, Credit Card, Debit Card, and Internet Banking.</span>
+                                  </li>
+
+                              </ul>
+                              <br>
+                          </div>
+                      </div>
+                  </div>
+
+                  <div class="card card-default m-b-0" style="text-align: left;">
+                      <div class="card-header " role="tab" id="headingThree">
+                          <h4 class="card-title" style="text-transform: none;">
+                              <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven">
+                                  <strong>7.  My account was debited while trying to pay but I did not get access to the course. Will I get a refund?</strong>
+                              </a>
+                          </h4>
+                      </div>
+                      <div id="collapseSeven" class="collapse" role="tabcard" aria-labelledby="headingSeven" aria-expanded="false">
+                          <div class="card-block" > 
+                              <ul class="nav nav-tabs nav-tabs-simple nav-tabs-left bg-white" id="tab-3" style="width:100%;">
+
+                                  <li class="nav-item" style="margin-bottom: 5px;">
+                                    <strong>Ans. </strong>&nbsp;<span style="font-family: Montserrat;">If you did not get signed up for the course, the amount debited from your account will automatically be refunded to you within 3-5 days.</span>
+                                  </li>
+
+                              </ul>
+                              <br>
+                          </div>
+                      </div>
+                  </div>
+
+                  <div class="card card-default m-b-0" style="text-align: left;">
+                      <div class="card-header " role="tab" id="headingThree">
+                          <h4 class="card-title" style="text-transform: none;">
+                              <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseEight" aria-expanded="false" aria-controls="collapseEight">
+                                  <strong>8. Since Facebook login is used, will any information about the purchase be posted on Facebook?</strong>
+                              </a>
+                          </h4>
+                      </div>
+                      <div id="collapseEight" class="collapse" role="tabcard" aria-labelledby="headingEight" aria-expanded="false">
+                          <div class="card-block" > 
+                              <ul class="nav nav-tabs nav-tabs-simple nav-tabs-left bg-white" id="tab-3" style="width:100%;">
+
+                                  <li class="nav-item" style="margin-bottom: 5px;">
+                                    <strong>Ans. </strong>&nbsp;<span style="font-family: Montserrat;">No. The application only uses your facebook account to log you into the portal. Calmindia will NEVER share on your facebook.</span>
+                                  </li>
+
+                              </ul>
+                              <br>
+                          </div>
+                      </div>
+                  </div>
+
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+
+    </div>
+  </div>
+</div>
