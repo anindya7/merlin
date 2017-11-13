@@ -86,7 +86,7 @@
     <div class="card social-card share  full-width m-b-10 no-border">
       <div class="card-header " data-toggle="collapse" data-parent="#accordion" href="#collapseSyllabus" aria-expanded="true" aria-controls="collapseSyllabus">
         <div class="card-title">
-          <span class="font-montserrat all-caps" style="font-size: 16px;">
+          <span class="font-montserrat" style="font-size: 18px;text-transform: none;">
             What's bundled in the course?
           </span>
         </div>
@@ -101,7 +101,7 @@
               <% (1..@course.total_weeks).each do |week| %>
                   <div class="card card-default m-b-0" style="text-align: left;">
                       <div class="card-header " role="tab" id="headingThree">
-                          <h4 class="card-title">
+                          <h4 class="card-title" style="text-transform: none;">
                           <% if (week == 1) %>
                               <a data-toggle="collapse" data-parent="#accordion" href="#collapse<%= week %>" aria-expanded="true" aria-controls="collapse<%= week %>" class="">
                                <i class="fa fa-circle text-complete fs-11"></i>&nbsp;&nbsp;&nbsp;<strong>Week <%= week %></strong>
@@ -122,12 +122,12 @@
                               <ul class="nav nav-tabs nav-tabs-simple nav-tabs-left bg-white" id="tab-3" style="width:100%;">
                               <% @videos.ordered_in_week(week).each do |video| %>
                                   <li class="nav-item" style="margin-bottom: 15px;">
-                                    <i class="fa fa-video-camera" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;<span style="font-family: Montserrat; text-transform: uppercase;"><%= video.name %></span>
+                                    <i class="fa fa-video-camera" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;<span style="font-family: Montserrat;"><%= video.name %></span>
                                   </li>
                               <% end %>
                               <% @quizzes.ordered_in_week(week).each do |quiz| %>
                                   <li class="nav-item" style="margin-bottom: 15px;">
-                                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;<span style="font-family: Montserrat; text-transform: uppercase;"><%= quiz.name %></span>
+                                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;<span style="font-family: Montserrat;"><%= quiz.name %></span>
                                   </li>
                               <% end %>
                               </ul>
@@ -149,7 +149,7 @@
     <div class="card social-card share  full-width m-b-10 no-border">
       <div class="card-header">
         <div class="card-title" style="text-transform: none;">
-          <span class="font-montserrat" style="font-size: 16px;">
+          <span class="font-montserrat" style="font-size: 18px;">
             FAQs
           </span>
         </div>

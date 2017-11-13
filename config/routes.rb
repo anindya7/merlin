@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   mount RailsAdmin::Engine => '/mercmerc', as: 'rails_admin'
+  root :to => redirect('/users/sign_in')
   devise_for :users, controllers: { :registrations => "users/registrations", :omniauth_callbacks => "users/omniauth_callbacks", :sessions => 'users/sessions' }
   devise_scope :user do
     authenticated :user do
@@ -31,6 +32,7 @@ Rails.application.routes.draw do
   match '/paytm_payment' => 'paytm#start_payment', via: [:post], :as => :paytm_payment
   match '/confirm_payment' => 'paytm#verify_payment', via: [:post]
   # root "home#index"
+
   # root :to => 'users/registrations#new'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
