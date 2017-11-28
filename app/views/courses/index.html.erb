@@ -1,3 +1,9 @@
+<% content_for :fp_events do %>
+<% if current_user.sign_in_count == 1 %>
+fbq('track', 'CompleteRegistration');
+<% end %>
+<% end %>
+
 <div class="row">
   <div class="card social-card share  full-width m-b-10 no-border" data-social="item">
       <div class="card-header ">

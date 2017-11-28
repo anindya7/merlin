@@ -27,6 +27,10 @@
     });
   </script>
 <% end %>
+<% content_for :fp_events do %>
+fbq('track', 'InitiateCheckout');
+<% end %>
+
 <div class="row">
   <div class="col-md-4 offset-md-4">
     <div class="card">

@@ -15,6 +15,7 @@
   <body style="background-color:#536DFE;">
     <script>
       fbq('track', 'ViewContent');
+      <%= yield :fp_events %>
     </script>
     <%= render 'partials/flash' %>
     <div class="container text-center">
