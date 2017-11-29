@@ -1,4 +1,4 @@
 class ApplicationMailer < ActionMailer::Base
-  default from: "support@calmindia.com" # "Calm India <support@calmindia.com>"
+  default from: ""
   layout 'mailer'
 end

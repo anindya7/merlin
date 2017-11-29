@@ -49,7 +49,7 @@ Rails.application.configure do
     port: 587,
     enable_starttls_auto: true,
     format: :html,
-    from: 'Calm India <support@calmindia.com>'
+    from: ''
   }
 
   # Print deprecation notices to the Rails logger.
